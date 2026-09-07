@@ -86,20 +86,38 @@ def adx(df: pd.DataFrame, period: int = 14) -> pd.Series:
 
 def resample_4h(df: pd.DataFrame) -> pd.DataFrame:
     """1 saatlik mumları BIST seansına (10:00 başlangıç) göre 4 saatlik mumlara indirger."""
+    # NOT: pandas 2.2+ sürümlerinde büyük harfli "4H" kısaltması kullanımdan
+    # kaldırılıyor / bazı sürümlerde artık hata veriyor -> küçük harf "4h" kullan.
     agg = {
-        "Open": df["Open"].resample("4H", origin="start_day", offset="10h").first(),
-        "High": df["High"].resample("4H", origin="start_day", offset="10h").max(),
-        "Low": df["Low"].resample("4H", origin="start_day", offset="10h").min(),
-        "Close": df["Close"].resample("4H", origin="start_day", offset="10h").last(),
-        "Volume": df["Volume"].resample("4H", origin="start_day", offset="10h").sum(),
+        "Open": df["Open"].resample("4h", origin="start_day", offset="10h").first(),
+        "High": df["High"].resample("4h", origin="start_day", offset="10h").max(),
+        "Low": df["Low"].resample("4h", origin="start_day", offset="10h").min(),
+        "Close": df["Close"].resample("4h", origin="start_day", offset="10h").last(),
+        "Volume": df["Volume"].resample("4h", origin="start_day", offset="10h").sum(),
     }
     out = pd.DataFrame(agg).dropna(subset=["Open", "High", "Low", "Close"])
     return out
 
 
+def _download_with_retry(symbol: str, attempts: int = 3) -> pd.DataFrame:
+    """Yahoo Finance zaman zaman (özellikle GitHub Actions gibi bulut IP'lerinden)
+    boş sonuç / rate-limit döndürebiliyor; birkaç kez, aralarda bekleyerek dener."""
+    last_err = None
+    for i in range(attempts):
+        try:
+            raw = yf.download(symbol, period=LOOKBACK, interval=INTERVAL,
+                               progress=False, auto_adjust=False, threads=False)
+            if raw is not None and not raw.empty:
+                return raw
+            last_err = "boş veri döndü"
+        except Exception as exc:  # noqa: BLE001
+            last_err = str(exc)
+        time.sleep(2 + random.random() * 3)
+    raise RuntimeError(f"indirilemedi ({last_err})")
+
+
 def fetch_symbol(symbol: str):
-    raw = yf.download(symbol, period=LOOKBACK, interval=INTERVAL,
-                       progress=False, auto_adjust=False)
+    raw = _download_with_retry(symbol)
     if raw.empty:
         return None
 
@@ -163,6 +181,7 @@ def main():
                 errors.append(f"{sym}: yetersiz veri")
         except Exception as exc:  # noqa: BLE001
             errors.append(f"{sym}: {exc}")
+        time.sleep(1.5)  # istekler arasına küçük bekleme -> rate-limit riskini azaltır
 
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
