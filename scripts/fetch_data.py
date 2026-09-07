@@ -12,7 +12,9 @@ Yerelde denemek için:  pip install -r requirements.txt && python scripts/fetch_
 
 import json
 import os
+import random
 import sys
+import time
 from datetime import datetime, timezone
 
 import numpy as np
