@@ -189,6 +189,9 @@ async function loadData(){
   const meta = document.getElementById("meta");
   try{
     const res = await fetch(DATA_URL + "?t=" + Date.now());
+    if(!res.ok){
+      throw new Error(`data.json bulunamadı (HTTP ${res.status}) — dosya yolu veya Pages ayarı yanlış olabilir`);
+    }
     const json = await res.json();
     stocks = json.stocks || [];
     priceMap = {};
@@ -199,12 +202,16 @@ async function loadData(){
       ? "son güncelleme: " + dt.toLocaleString("tr-TR", { dateStyle:"medium", timeStyle:"short" })
       : "veri zamanı bilinmiyor";
 
-    renderTable();
+    renderTable(json.errors || []);
     populateSymbolSelect();
     renderPortfolio();
   }catch(err){
     meta.textContent = "veri yüklenemedi";
     console.error(err);
+    document.getElementById("tbody").innerHTML =
+      `<tr><td colspan="8" class="empty">Veri yüklenemedi: ${err.message || err}<br>
+       (data.json dosyasının konumunu ve GitHub Actions'ın çalışıp çalışmadığını kontrol et)</td></tr>`;
+    document.getElementById("f-symbol").innerHTML = "";
   }
 }
 
@@ -213,10 +220,13 @@ function fmt(n, d=2){
   return Number(n).toLocaleString("tr-TR", { minimumFractionDigits:d, maximumFractionDigits:d });
 }
 
-function renderTable(){
+function renderTable(errors){
   const tbody = document.getElementById("tbody");
   if(!stocks.length){
-    tbody.innerHTML = '<tr><td colspan="8" class="empty">Henüz veri yok — GitHub Actions workflow ilk kez çalıştığında burası dolacak.</td></tr>';
+    const errHtml = (errors && errors.length)
+      ? `<br><span style="color:var(--red)">Hatalar: ${errors.join(" · ")}</span>`
+      : "";
+    tbody.innerHTML = `<tr><td colspan="8" class="empty">Henüz veri yok — GitHub Actions workflow'unu Actions sekmesinden "Run workflow" ile elle çalıştırıp birkaç dakika bekle.${errHtml}</td></tr>`;
     return;
   }
   tbody.innerHTML = stocks.map(s => {
@@ -252,6 +262,11 @@ let portfolio = loadPortfolio();
 function populateSymbolSelect(){
   const sel = document.getElementById("f-symbol");
   const current = sel.value;
+  if(!stocks.length){
+    sel.innerHTML = '<option value="">(veri yok)</option>';
+    document.getElementById("f-price").value = "-";
+    return;
+  }
   sel.innerHTML = stocks.map(s => `<option value="${s.symbol}">${s.symbol}</option>`).join("");
   if(current && priceMap[current]) sel.value = current;
   updatePriceField();
