@@ -1,5 +1,5 @@
 {
-  "cash": 94809,
+  "cash": 94782.2,
   "positions": {
     "ASELS": {
       "qty": 10,
@@ -8,10 +8,15 @@
     "GARAN": {
       "qty": 10,
       "avgCost": 133.1
+    },
+    "SASA": {
+      "qty": 10,
+      "avgCost": 2.68
     }
   },
   "log": [
     "[8.09.2026 11:15] AL — 10 adet ASELS @ 386,00 TL (toplam 3.860,00 TL)",
-    "[8.09.2026 11:15] AL — 10 adet GARAN @ 133,10 TL (toplam 1.331,00 TL)"
+    "[8.09.2026 11:15] AL — 10 adet GARAN @ 133,10 TL (toplam 1.331,00 TL)",
+    "[8.09.2026 11:15] AL — 10 adet SASA @ 2,68 TL (toplam 26,80 TL)"
   ]
 }
