@@ -166,6 +166,7 @@
         <button type="button" id="gh-token-save">Kaydet</button>
         <button type="button" id="gh-token-clear">Kaldır</button>
       </div>
+      <div id="gh-token-msg" style="font-size:12px; color:var(--red); margin-top:8px; min-height:14px;"></div>
       <div class="row" style="margin-top:10px;">
         <input type="text" id="gh-repo-override" placeholder="isteğe bağlı: owner/repo (otomatik algılanamazsa)" />
         <button type="button" id="gh-repo-save">Repoyu Kaydet</button>
@@ -303,17 +304,31 @@ function getRepoInfo(){
   return { owner, repo };
 }
 
-function getToken(){ return localStorage.getItem(GH_TOKEN_KEY) || ""; }
+function getToken(){ return (localStorage.getItem(GH_TOKEN_KEY) || "").trim(); }
+
+// GitHub token'ları yalnızca harf/rakam/alt çizgiden oluşur (ör. github_pat_...).
+// Kopyala-yapıştır sırasında araya boşluk, satır sonu veya başka bir metin
+// karışırsa tarayıcı fetch header'ında anlaşılmaz bir hata verir — burada
+// bunu erkenden yakalayıp anlaşılır bir mesaja çeviriyoruz.
+function assertValidToken(token){
+  if(!token) throw new Error("Önce Ayarlar'dan GitHub erişim anahtarını gir.");
+  if(!/^[A-Za-z0-9_]+$/.test(token)){
+    throw new Error("Kayıtlı GitHub token'ı geçersiz görünüyor (beklenmeyen karakter içeriyor). Ayarlar'dan token'ı Kaldır'a basıp yalnızca token metnini (başında/sonunda boşluk olmadan) tekrar yapıştır.");
+  }
+  return token;
+}
 
 function b64EncodeUnicode(str){ return btoa(unescape(encodeURIComponent(str))); }
 function b64DecodeUnicode(str){ return decodeURIComponent(escape(atob(str))); }
 
 async function ghApiGetFile(path){
   const { owner, repo } = getRepoInfo();
+  const token = getToken();
+  if(token) assertValidToken(token);
   const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
     headers: {
       Accept: "application/vnd.github+json",
-      ...(getToken() ? { Authorization: `Bearer ${getToken()}` } : {})
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
     }
   });
   if(!res.ok) throw new Error(`GitHub'dan okunamadı (HTTP ${res.status})`);
@@ -322,8 +337,7 @@ async function ghApiGetFile(path){
 
 async function ghApiPutFile(path, dataObj, sha, message){
   const { owner, repo } = getRepoInfo();
-  const token = getToken();
-  if(!token) throw new Error("Kaydetmek için önce Ayarlar'dan GitHub erişim anahtarını gir.");
+  const token = assertValidToken(getToken());
   const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
     method: "PUT",
     headers: {
@@ -559,8 +573,16 @@ document.getElementById("settings-toggle").addEventListener("click", () => {
   document.getElementById("settings-panel").classList.toggle("open");
 });
 document.getElementById("gh-token-save").addEventListener("click", () => {
-  const val = document.getElementById("gh-token-input").value.trim();
-  if(!val) return;
+  const raw = document.getElementById("gh-token-input").value;
+  // Kopyala-yapıştırdan gelebilecek görünmez/beyaz boşluk karakterlerini de temizle.
+  const val = raw.replace(/\s+/g, "");
+  const msgEl = document.getElementById("gh-token-msg");
+  if(!val){ msgEl.textContent = ""; return; }
+  if(!/^[A-Za-z0-9_]+$/.test(val)){
+    msgEl.textContent = "Bu değer geçerli bir GitHub token'ına benzemiyor (yalnızca harf, rakam ve alt çizgi içermeli). Token'ı GitHub'daki sayfadan tekrar kopyalayıp yalnızca onu yapıştır.";
+    return;
+  }
+  msgEl.textContent = "";
   localStorage.setItem(GH_TOKEN_KEY, val);
   document.getElementById("gh-token-input").value = "";
   updateSettingsStatus();
@@ -568,6 +590,7 @@ document.getElementById("gh-token-save").addEventListener("click", () => {
 });
 document.getElementById("gh-token-clear").addEventListener("click", () => {
   localStorage.removeItem(GH_TOKEN_KEY);
+  document.getElementById("gh-token-msg").textContent = "";
   updateSettingsStatus();
 });
 document.getElementById("gh-repo-save").addEventListener("click", () => {
