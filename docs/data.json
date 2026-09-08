@@ -1,7 +1,382 @@
 {
-  "generated_at": "2026-01-01T00:00:00+00:00",
+  "generated_at": "2026-09-08T08:01:35.476168+00:00",
   "timeframe": "4h",
-  "stocks": [],
-  "errors": [],
-  "note": "Bu dosya ilk kurulumda boştur. GitHub Actions workflow'u ilk kez çalıştığında (Actions sekmesinden 'Run workflow' ile manuel tetikleyebilirsiniz) gerçek veriyle doldurulur."
+  "stocks": [
+    {
+      "symbol": "THYAO",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 296.75,
+        "ema9": 295.84,
+        "ema21": 297.46,
+        "sma50": 300.95,
+        "macd": -2.0498,
+        "adx": 15.34,
+        "rsi": 46.1,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 296.75,
+        "ema9": 295.61,
+        "ema21": 297.53,
+        "sma50": 301.13,
+        "macd": -2.278,
+        "adx": 16.48,
+        "rsi": 46.1,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "ASELS",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 384.75,
+        "ema9": 388.31,
+        "ema21": 389.59,
+        "sma50": 393.94,
+        "macd": -1.4732,
+        "adx": 13.2,
+        "rsi": 44.48,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 386.5,
+        "ema9": 389.2,
+        "ema21": 390.07,
+        "sma50": 394.01,
+        "macd": -1.2093,
+        "adx": 13.78,
+        "rsi": 46.05,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "GARAN",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 133.1,
+        "ema9": 132.63,
+        "ema21": 132.46,
+        "sma50": 131.99,
+        "macd": 0.1913,
+        "adx": 10.83,
+        "rsi": 53.33,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 133.3,
+        "ema9": 132.51,
+        "ema21": 132.39,
+        "sma50": 131.95,
+        "macd": 0.152,
+        "adx": 11.49,
+        "rsi": 54.23,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "AKBNK",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 73.15,
+        "ema9": 72.58,
+        "ema21": 72.27,
+        "sma50": 71.44,
+        "macd": 0.3349,
+        "adx": 12.47,
+        "rsi": 56.9,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 73.3,
+        "ema9": 72.43,
+        "ema21": 72.18,
+        "sma50": 71.36,
+        "macd": 0.2927,
+        "adx": 13.21,
+        "rsi": 57.97,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "EREGL",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 38.64,
+        "ema9": 37.95,
+        "ema21": 37.94,
+        "sma50": 38.13,
+        "macd": -0.0829,
+        "adx": 16.29,
+        "rsi": 58.7,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 38.62,
+        "ema9": 37.78,
+        "ema21": 37.87,
+        "sma50": 38.1,
+        "macd": -0.1649,
+        "adx": 15.45,
+        "rsi": 58.5,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "KCHOL",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 219.8,
+        "ema9": 217.91,
+        "ema21": 216.6,
+        "sma50": 215.16,
+        "macd": 1.2317,
+        "adx": 10.97,
+        "rsi": 58.06,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 220.4,
+        "ema9": 217.44,
+        "ema21": 216.28,
+        "sma50": 214.89,
+        "macd": 1.0893,
+        "adx": 10.44,
+        "rsi": 59.51,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "SISE",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 42.38,
+        "ema9": 40.71,
+        "ema21": 40.1,
+        "sma50": 39.66,
+        "macd": 0.3991,
+        "adx": 25.34,
+        "rsi": 72.04,
+        "highlight": true
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 42.32,
+        "ema9": 40.29,
+        "ema21": 39.88,
+        "sma50": 39.64,
+        "macd": 0.2336,
+        "adx": 23.5,
+        "rsi": 71.74,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "BIMAS",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 415.75,
+        "ema9": 414.96,
+        "ema21": 412.68,
+        "sma50": 409.88,
+        "macd": 2.3353,
+        "adx": 20.52,
+        "rsi": 56.81,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 416.25,
+        "ema9": 414.77,
+        "ema21": 412.37,
+        "sma50": 409.06,
+        "macd": 2.3665,
+        "adx": 20.02,
+        "rsi": 57.72,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "TUPRS",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 398.5,
+        "ema9": 395.02,
+        "ema21": 393.82,
+        "sma50": 390.25,
+        "macd": 2.0405,
+        "adx": 16.26,
+        "rsi": 56.11,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 398.25,
+        "ema9": 394.15,
+        "ema21": 393.35,
+        "sma50": 389.49,
+        "macd": 1.8235,
+        "adx": 16.36,
+        "rsi": 55.91,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "SASA",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 2.68,
+        "ema9": 2.47,
+        "ema21": 2.39,
+        "sma50": 2.34,
+        "macd": 0.0524,
+        "adx": 28.49,
+        "rsi": 80.65,
+        "highlight": true
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 2.66,
+        "ema9": 2.42,
+        "ema21": 2.37,
+        "sma50": 2.34,
+        "macd": 0.0319,
+        "adx": 25.7,
+        "rsi": 79.88,
+        "highlight": true
+      }
+    },
+    {
+      "symbol": "FROTO",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 80.5,
+        "ema9": 78.83,
+        "ema21": 78.23,
+        "sma50": 78.67,
+        "macd": 0.2949,
+        "adx": 22.2,
+        "rsi": 65.37,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 80.55,
+        "ema9": 78.42,
+        "ema21": 78.01,
+        "sma50": 78.64,
+        "macd": 0.1173,
+        "adx": 20.96,
+        "rsi": 65.79,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "TCELL",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 98.1,
+        "ema9": 98.03,
+        "ema21": 98.45,
+        "sma50": 101.06,
+        "macd": -0.7973,
+        "adx": 22.86,
+        "rsi": 46.2,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 98.25,
+        "ema9": 98.02,
+        "ema21": 98.49,
+        "sma50": 101.17,
+        "macd": -0.8704,
+        "adx": 23.99,
+        "rsi": 46.84,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "PGSUS",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 149.2,
+        "ema9": 148.88,
+        "ema21": 149.23,
+        "sma50": 149.99,
+        "macd": -0.4599,
+        "adx": 14.61,
+        "rsi": 48.61,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 149.2,
+        "ema9": 148.81,
+        "ema21": 149.23,
+        "sma50": 150.04,
+        "macd": -0.5231,
+        "adx": 14.43,
+        "rsi": 48.61,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "ISCTR",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 13.03,
+        "ema9": 12.99,
+        "ema21": 12.9,
+        "sma50": 12.71,
+        "macd": 0.093,
+        "adx": 24.67,
+        "rsi": 58.44,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 13.03,
+        "ema9": 12.98,
+        "ema21": 12.89,
+        "sma50": 12.7,
+        "macd": 0.0938,
+        "adx": 24.28,
+        "rsi": 58.44,
+        "highlight": false
+      }
+    },
+    {
+      "symbol": "YKBNK",
+      "current": {
+        "time": "2026-09-08T10:00:00+03:00",
+        "price": 36.3,
+        "ema9": 36.18,
+        "ema21": 36.24,
+        "sma50": 36.12,
+        "macd": -0.0378,
+        "adx": 18.65,
+        "rsi": 51.07,
+        "highlight": false
+      },
+      "previous": {
+        "time": "2026-09-08T06:00:00+03:00",
+        "price": 36.36,
+        "ema9": 36.15,
+        "ema21": 36.24,
+        "sma50": 36.1,
+        "macd": -0.0515,
+        "adx": 19.53,
+        "rsi": 51.93,
+        "highlight": false
+      }
+    }
+  ],
+  "errors": []
 }
