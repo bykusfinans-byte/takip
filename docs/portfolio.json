@@ -1,5 +1,12 @@
 {
-  "cash": 100000,
-  "positions": {},
-  "log": []
+  "cash": 96140,
+  "positions": {
+    "ASELS": {
+      "qty": 10,
+      "avgCost": 386
+    }
+  },
+  "log": [
+    "[8.09.2026 11:15] AL — 10 adet ASELS @ 386,00 TL (toplam 3.860,00 TL)"
+  ]
 }
