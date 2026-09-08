@@ -362,17 +362,25 @@ async function savePortfolioRemote(newPortfolio, attempt = 1){
 // Görüntüleme: token varsa API üzerinden (daha taze), yoksa yayınlanan
 // statik dosyadan (herkes için, anahtarsız) okur.
 async function loadPortfolioRemote(){
+  let data;
   if(getToken()){
     try{
       const file = await ghApiGetFile(PORTFOLIO_API_PATH);
-      return JSON.parse(b64DecodeUnicode(file.content));
+      data = JSON.parse(b64DecodeUnicode(file.content));
     }catch(err){
       console.warn("API üzerinden okunamadı, yayınlanan dosyaya düşülüyor:", err);
     }
   }
-  const res = await fetch(PORTFOLIO_PUBLIC_URL + "?t=" + Date.now());
-  if(!res.ok) throw new Error("portfolio.json okunamadı");
-  return res.json();
+  if(!data){
+    const res = await fetch(PORTFOLIO_PUBLIC_URL + "?t=" + Date.now());
+    if(!res.ok) throw new Error("portfolio.json okunamadı");
+    data = await res.json();
+  }
+  return {
+    cash: typeof data.cash === "number" ? data.cash : START_CASH,
+    positions: data.positions || {},
+    log: data.log || [],
+  };
 }
 
 function updateSettingsStatus(){
@@ -464,65 +472,77 @@ function buy(){
   const price = priceMap[sym];
   if(!sym || !price) return showMsg("Fiyat bulunamadı.", true);
   if(!qty || qty <= 0) return showMsg("Geçerli bir adet gir.", true);
-  const cost = qty * price;
-  if(cost > portfolio.cash) return showMsg("Yetersiz nakit.", true);
 
-  const draft = JSON.parse(JSON.stringify(portfolio));
-  const pos = draft.positions[sym] || { qty:0, avgCost:0 };
-  const newQty = pos.qty + qty;
-  pos.avgCost = (pos.avgCost * pos.qty + cost) / newQty;
-  pos.qty = newQty;
-  draft.positions[sym] = pos;
-  draft.cash -= cost;
-  pushLogTo(draft, `AL — ${qty} adet ${sym} @ ${fmt(price)} TL (toplam ${fmt(cost)} TL)`);
-
-  commitPortfolio(draft, `${qty} adet ${sym} alındı.`);
+  commitPortfolio(fresh => {
+    const cost = qty * price;
+    if(cost > fresh.cash) throw new Error("Yetersiz nakit.");
+    const pos = fresh.positions[sym] || { qty:0, avgCost:0 };
+    const newQty = pos.qty + qty;
+    pos.avgCost = (pos.avgCost * pos.qty + cost) / newQty;
+    pos.qty = newQty;
+    fresh.positions[sym] = pos;
+    fresh.cash -= cost;
+    pushLogTo(fresh, `AL — ${qty} adet ${sym} @ ${fmt(price)} TL (toplam ${fmt(cost)} TL)`);
+    return fresh;
+  }, () => `${qty} adet ${sym} alındı.`);
 }
 
 function sell(){
   const sym = document.getElementById("f-symbol").value;
   const qty = parseInt(document.getElementById("f-qty").value, 10);
   const price = priceMap[sym];
-  const existing = portfolio.positions[sym];
   if(!sym || !price) return showMsg("Fiyat bulunamadı.", true);
   if(!qty || qty <= 0) return showMsg("Geçerli bir adet gir.", true);
-  if(!existing || existing.qty < qty) return showMsg("Elinde bu kadar hisse yok.", true);
 
-  const draft = JSON.parse(JSON.stringify(portfolio));
-  const pos = draft.positions[sym];
-  const proceeds = qty * price;
-  pos.qty -= qty;
-  draft.cash += proceeds;
-  if(pos.qty === 0) delete draft.positions[sym];
-  pushLogTo(draft, `SAT — ${qty} adet ${sym} @ ${fmt(price)} TL (toplam ${fmt(proceeds)} TL)`);
-
-  commitPortfolio(draft, `${qty} adet ${sym} satıldı.`);
+  commitPortfolio(fresh => {
+    const pos = fresh.positions[sym];
+    if(!pos || pos.qty < qty) throw new Error("Elinde bu kadar hisse yok.");
+    const proceeds = qty * price;
+    pos.qty -= qty;
+    fresh.cash += proceeds;
+    if(pos.qty === 0) delete fresh.positions[sym];
+    pushLogTo(fresh, `SAT — ${qty} adet ${sym} @ ${fmt(price)} TL (toplam ${fmt(proceeds)} TL)`);
+    return fresh;
+  }, () => `${qty} adet ${sym} satıldı.`);
 }
 
 function resetPortfolio(){
   if(!confirm("Sanal portföyü sıfırlamak istediğine emin misin? Tüm pozisyonlar ve geçmiş silinecek.")) return;
-  const draft = { cash: START_CASH, positions: {}, log: [] };
-  pushLogTo(draft, "Portföy sıfırlandı.");
-  commitPortfolio(draft, "Portföy sıfırlandı.");
+  commitPortfolio(() => {
+    const draft = { cash: START_CASH, positions: {}, log: [] };
+    pushLogTo(draft, "Portföy sıfırlandı.");
+    return draft;
+  }, () => "Portföy sıfırlandı.");
 }
 
-// Optimistik günceller, GitHub'a kaydeder; kaydetme başarısız olursa eski hâline döner.
-async function commitPortfolio(draft, successMsg){
+// Her işlemden önce GitHub'daki EN GÜNCEL portföyü çeker, işlemi onun
+// üzerine uygular ve tekrar kaydeder — böylece başka bir tarayıcıdan
+// yapılmış bir işlemin üzerine yazılma riski en aza iner.
+async function commitPortfolio(buildDraft, successMsgFn){
   if(portfolioBusy) return showMsg("Bir işlem daha sürüyor, biraz bekle.", true);
   if(!getToken()){
     return showMsg("İşlem yapmak için önce Ayarlar'dan GitHub erişim anahtarını gir.", true);
   }
   portfolioBusy = true;
-  const previous = portfolio;
-  portfolio = draft;
-  renderPortfolio();
-  showMsg("kaydediliyor…");
+  const previousLocal = portfolio;
+  showMsg("kontrol ediliyor…");
   try{
-    await savePortfolioRemote(draft);
-    showMsg(successMsg);
+    const fresh = await loadPortfolioRemote();       // en güncel hâli çek
+    let draft;
+    try{
+      draft = buildDraft(fresh);                       // işlemi onun üzerine uygula
+    }catch(valErr){
+      showMsg(valErr.message || String(valErr), true);
+      return;
+    }
+    portfolio = draft;                                 // iyimser göster
+    renderPortfolio();
+    showMsg("kaydediliyor…");
+    await savePortfolioRemote(draft);                  // GitHub'a yaz
+    showMsg(successMsgFn());
   }catch(err){
     console.error(err);
-    portfolio = previous;
+    portfolio = previousLocal;
     renderPortfolio();
     showMsg("Kaydedilemedi: " + (err.message || err), true);
   }finally{
