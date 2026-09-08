@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-09-08T08:01:35.476168+00:00",
+  "generated_at": "2026-09-08T08:14:02.162930+00:00",
   "timeframe": "4h",
   "stocks": [
     {
       "symbol": "THYAO",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 296.75,
-        "ema9": 295.84,
-        "ema21": 297.46,
-        "sma50": 300.95,
-        "macd": -2.0498,
+        "price": 296.5,
+        "ema9": 295.79,
+        "ema21": 297.44,
+        "sma50": 300.94,
+        "macd": -2.0698,
         "adx": 15.34,
-        "rsi": 46.1,
+        "rsi": 45.57,
         "highlight": false
       },
       "previous": {
@@ -31,13 +31,13 @@
       "symbol": "ASELS",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 384.75,
-        "ema9": 388.31,
-        "ema21": 389.59,
-        "sma50": 393.94,
-        "macd": -1.4732,
+        "price": 386.0,
+        "ema9": 388.56,
+        "ema21": 389.7,
+        "sma50": 393.96,
+        "macd": -1.3735,
         "adx": 13.2,
-        "rsi": 44.48,
+        "rsi": 45.59,
         "highlight": false
       },
       "previous": {
@@ -81,13 +81,13 @@
       "symbol": "AKBNK",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 73.15,
-        "ema9": 72.58,
-        "ema21": 72.27,
-        "sma50": 71.44,
-        "macd": 0.3349,
+        "price": 73.3,
+        "ema9": 72.61,
+        "ema21": 72.28,
+        "sma50": 71.45,
+        "macd": 0.3469,
         "adx": 12.47,
-        "rsi": 56.9,
+        "rsi": 57.97,
         "highlight": false
       },
       "previous": {
@@ -106,13 +106,13 @@
       "symbol": "EREGL",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 38.64,
-        "ema9": 37.95,
-        "ema21": 37.94,
+        "price": 38.54,
+        "ema9": 37.93,
+        "ema21": 37.93,
         "sma50": 38.13,
-        "macd": -0.0829,
-        "adx": 16.29,
-        "rsi": 58.7,
+        "macd": -0.0908,
+        "adx": 15.96,
+        "rsi": 57.35,
         "highlight": false
       },
       "previous": {
@@ -131,13 +131,13 @@
       "symbol": "KCHOL",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 219.8,
-        "ema9": 217.91,
-        "ema21": 216.6,
+        "price": 219.9,
+        "ema9": 217.93,
+        "ema21": 216.61,
         "sma50": 215.16,
-        "macd": 1.2317,
-        "adx": 10.97,
-        "rsi": 58.06,
+        "macd": 1.2397,
+        "adx": 10.81,
+        "rsi": 58.3,
         "highlight": false
       },
       "previous": {
@@ -156,13 +156,13 @@
       "symbol": "SISE",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 42.38,
-        "ema9": 40.71,
-        "ema21": 40.1,
-        "sma50": 39.66,
-        "macd": 0.3991,
+        "price": 42.14,
+        "ema9": 40.66,
+        "ema21": 40.08,
+        "sma50": 39.65,
+        "macd": 0.38,
         "adx": 25.34,
-        "rsi": 72.04,
+        "rsi": 69.53,
         "highlight": true
       },
       "previous": {
@@ -181,13 +181,13 @@
       "symbol": "BIMAS",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 415.75,
-        "ema9": 414.96,
-        "ema21": 412.68,
-        "sma50": 409.88,
-        "macd": 2.3353,
+        "price": 415.0,
+        "ema9": 414.81,
+        "ema21": 412.61,
+        "sma50": 409.86,
+        "macd": 2.2755,
         "adx": 20.52,
-        "rsi": 56.81,
+        "rsi": 55.5,
         "highlight": false
       },
       "previous": {
@@ -206,13 +206,13 @@
       "symbol": "TUPRS",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 398.5,
-        "ema9": 395.02,
-        "ema21": 393.82,
-        "sma50": 390.25,
-        "macd": 2.0405,
-        "adx": 16.26,
-        "rsi": 56.11,
+        "price": 401.25,
+        "ema9": 395.57,
+        "ema21": 394.07,
+        "sma50": 390.31,
+        "macd": 2.2598,
+        "adx": 16.3,
+        "rsi": 58.27,
         "highlight": false
       },
       "previous": {
@@ -256,13 +256,13 @@
       "symbol": "FROTO",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 80.5,
-        "ema9": 78.83,
-        "ema21": 78.23,
-        "sma50": 78.67,
-        "macd": 0.2949,
+        "price": 80.75,
+        "ema9": 78.88,
+        "ema21": 78.26,
+        "sma50": 78.68,
+        "macd": 0.3148,
         "adx": 22.2,
-        "rsi": 65.37,
+        "rsi": 66.63,
         "highlight": false
       },
       "previous": {
@@ -286,7 +286,7 @@
         "ema21": 98.45,
         "sma50": 101.06,
         "macd": -0.7973,
-        "adx": 22.86,
+        "adx": 22.93,
         "rsi": 46.2,
         "highlight": false
       },
@@ -331,13 +331,13 @@
       "symbol": "ISCTR",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 13.03,
-        "ema9": 12.99,
-        "ema21": 12.9,
+        "price": 13.08,
+        "ema9": 13.0,
+        "ema21": 12.91,
         "sma50": 12.71,
-        "macd": 0.093,
+        "macd": 0.097,
         "adx": 24.67,
-        "rsi": 58.44,
+        "rsi": 60.34,
         "highlight": false
       },
       "previous": {
@@ -356,13 +356,13 @@
       "symbol": "YKBNK",
       "current": {
         "time": "2026-09-08T10:00:00+03:00",
-        "price": 36.3,
-        "ema9": 36.18,
-        "ema21": 36.24,
+        "price": 36.4,
+        "ema9": 36.2,
+        "ema21": 36.25,
         "sma50": 36.12,
-        "macd": -0.0378,
+        "macd": -0.0298,
         "adx": 18.65,
-        "rsi": 51.07,
+        "rsi": 52.47,
         "highlight": false
       },
       "previous": {
