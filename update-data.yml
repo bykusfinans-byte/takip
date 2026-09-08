@@ -1,0 +1,45 @@
+name: BIST 4H veri güncelle
+
+on:
+  schedule:
+    # 06:15, 10:15, 14:15, 18:15 UTC -> BIST seansına göre yaklaşık 4 saatte bir
+    # (Not: GitHub cron UTC'dir, DST'ye göre yaz/kış saatinde 1 saat kayabilir)
+    - cron: "15 6,10,14,18 * * 1-5"
+  workflow_dispatch: {}
+
+# Aynı anda iki çalışma başlarsa (örn. elle tetikleme + zamanlanmış çalışma
+# çakışırsa) ikinci çalışma birincisi bitene kadar kuyrukta bekler.
+# Önceki hatanın (push reddedildi) asıl sebebi buydu.
+concurrency:
+  group: bist-data-update
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Bağımlılıkları kur
+        run: pip install -r requirements.txt
+
+      - name: Veriyi çek ve hesapla
+        run: python scripts/fetch_data.py
+
+      # Elle git commit/push yazmak yerine, tam bu iş için tasarlanmış,
+      # yaygın kullanılan ve pull/rebase güvenliğini kendi içinde
+      # yöneten hazır bir action kullanıyoruz.
+      - name: data.json değiştiyse commit et ve push et
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "data.json güncellendi"
+          file_pattern: docs/data.json
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com

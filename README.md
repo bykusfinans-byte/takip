@@ -49,6 +49,55 @@ değiştirerek sıklığı ayarlayabilirsin.
 düzenle (Yahoo Finance formatı: `KOD.IS`, örn. `THYAO.IS`). Değişikliği
 push ettikten sonra workflow'u elle bir kez tetikle.
 
+## Sanal portföyü cihazlar arasında ortak tutmak
+
+Portföy artık tarayıcı `localStorage`'ı yerine **reponun içindeki
+`docs/portfolio.json` dosyasında** tutuluyor. Böylece:
+
+- **Görüntüleme** (portföyü/pozisyonları görmek) herhangi bir tarayıcıdan,
+  anahtarsız çalışır — çünkü dosya herkese açık statik sitenin bir parçası.
+- **Al-sat işlemi yapmak** (yazma) için, işlemi yaptığın tarayıcıya bir
+  GitHub erişim anahtarı (personal access token) tanımlaman gerekir —
+  çünkü tarayıcıdan doğrudan repoya commit atılıyor.
+
+### Erişim anahtarı nasıl oluşturulur
+
+1. GitHub'da sağ üst profil → **Settings → Developer settings →
+   Personal access tokens → Fine-grained tokens → Generate new token**.
+2. **Repository access**: "Only select repositories" seç, bu repoyu
+   (örn. `takip`) işaretle.
+3. **Permissions → Repository permissions → Contents**: **Read and write**
+   yap. Başka izin verme.
+4. Bir son kullanma tarihi (expiration) seç, token'ı oluştur ve
+   `github_pat_...` ile başlayan değeri kopyala (bu değeri bir daha
+   göremezsin, kaybedersen yeni token oluşturman gerekir).
+5. Sitede **"⚙ Ayarlar / GitHub bağlantısı"** panelini aç, token'ı yapıştır,
+   **Kaydet**'e bas. Artık o tarayıcıdan al-sat yapabilirsin.
+6. Başka bir cihazdan/tarayıcıdan da işlem yapmak istersen, aynı adımı
+   (aynı veya yeni bir token ile) o cihazda da yap — portföyü **görmek**
+   için buna gerek yok, sadece **işlem yapmak** için gerekiyor.
+
+Token yalnızca o tarayıcının `localStorage`'ında saklanır, repoya
+gönderilmez; sadece GitHub API isteklerinde kimlik doğrulamak için
+kullanılır. Riski en aza indirmek için token'ı yalnızca bu repoyla ve
+yalnızca "Contents: Read and write" izniyle sınırlı tuttuğundan emin ol.
+
+### Notlar
+
+- Repo adı/kullanıcı adı genelde site adresinden (`kullanici.github.io/repo/`)
+  otomatik algılanır. Algılanamazsa Ayarlar panelindeki "owner/repo"
+  kutusuna elle yazabilirsin.
+- Token'ı **girmeden** siteyi açan herkes portföyü görebilir ama
+  değiştiremez — repo public ise bu, herkesin görebileceği anlamına gelir.
+  Bunu istemiyorsan repoyu private yapabilirsin (Pages, private
+  repolarda GitHub Pro/Team/Enterprise gerektirebilir — ücretsiz
+  hesaplarda genelde yalnızca public repolarda Pages ücretsizdir).
+- Anahtarsız görüntülemede veri, GitHub Pages'in yayınladığı statik
+  dosyadan gelir; bir işlem yaptıktan sonra **başka** bir cihazda bunun
+  görünmesi birkaç dakika sürebilir (Pages'in yayın/CDN gecikmesi).
+  Anahtarlı tarayıcıda ise doğrudan GitHub API'den okunduğu için an be an
+  günceldir.
+
 ## Sınırlamalar / notlar
 
 - Veri Yahoo Finance'ten geliyor; gecikmeli/gerçek zamanlı olmayabilir ve
@@ -60,9 +109,8 @@ push ettikten sonra workflow'u elle bir kez tetikle.
 - ADX/RSI/MACD hesapları standart formüllerle (Wilder yumuşatması) yazıldı,
   farklı platformlarla ufak ondalık farkları olabilir.
 - Bu araç **yatırım tavsiyesi değildir**, eğitim ve deneme amaçlıdır.
-- Sanal portföy verisi yalnızca tarayıcı `localStorage`'ında tutulur;
-  tarayıcı verilerini temizlersen ya da başka bir cihazdan girersen
-  portföy sıfırdan başlar.
+- Sanal portföy artık repodaki `docs/portfolio.json` dosyasında tutulur
+  (bkz. yukarıdaki "Sanal portföyü cihazlar arasında ortak tutmak" bölümü).
 
 ## Sorun giderme
 
