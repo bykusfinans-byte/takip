@@ -1,10 +1,13 @@
 name: BIST 4H veri güncelle
 
 on:
+  # BIST seansı 10:00-18:00 (Türkiye saati, TRT = UTC+3 sabit, DST yok)
+  # yani 07:00-15:00 UTC arası, hafta içi, 10 dakikada bir çalışır.
+  # Repo public olduğu için Actions dakikaları ücretsizdir; Yahoo Finance'e
+  # aşırı yüklenmeyi önlemek için 10 dakika seçildi. Sık hata/rate-limit
+  # görürsen "*/10" kısmını "*/20" veya "*/30" yaparak seyreltebilirsin.
   schedule:
-    # 06:15, 10:15, 14:15, 18:15 UTC -> BIST seansına göre yaklaşık 4 saatte bir
-    # (Not: GitHub cron UTC'dir, DST'ye göre yaz/kış saatinde 1 saat kayabilir)
-    - cron: "15 6,10,14,18 * * 1-5"
+    - cron: "*/10 7-15 * * 1-5"
   workflow_dispatch: {}
 
 # Aynı anda iki workflow çalışması başlarsa, ikincisi birincisi bitene
