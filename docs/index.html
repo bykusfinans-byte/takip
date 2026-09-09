@@ -86,28 +86,32 @@
   #btn-reset{ background:transparent; border-color:var(--line); color:var(--muted); margin-left:auto; }
   #trade-msg{ font-size:12.5px; color:var(--muted); margin:-6px 0 16px; min-height:16px; }
 
-  .settings-toggle{
-    display:inline-flex; align-items:center; gap:6px; background:transparent;
-    border:1px solid var(--line); color:var(--muted); font-family:var(--font-ui);
-    font-size:12px; padding:6px 12px; border-radius:20px; cursor:pointer; margin-bottom:16px;
+  /* Kilit ekranı */
+  #lock-screen{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:20px;
   }
-  .settings-toggle.on{ color:var(--green); border-color:rgba(46,160,67,0.4); }
-  #settings-panel{
-    display:none; background:var(--panel); border:1px solid var(--line); border-radius:10px;
-    padding:16px 18px; margin-bottom:20px;
+  #lock-box{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:32px 28px; width:100%; max-width:340px; text-align:center;
   }
-  #settings-panel.open{ display:block; }
-  #settings-panel p{ margin:0 0 12px; color:var(--muted); font-size:12.5px; max-width:620px; }
-  #settings-panel .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-  #settings-panel input{
-    background:var(--panel-2); border:1px solid var(--line); color:var(--text);
-    padding:9px 10px; border-radius:7px; font-family:var(--font-num); font-size:13px; flex:1; min-width:220px;
+  #lock-box h1{ font-size:18px; margin:0 0 6px; }
+  #lock-box p{ color:var(--muted); font-size:13px; margin:0 0 18px; }
+  #lock-box input{
+    width:100%; background:var(--panel-2); border:1px solid var(--line); color:var(--text);
+    padding:11px 12px; border-radius:7px; font-family:var(--font-num); font-size:14px;
+    box-sizing:border-box; margin-bottom:12px; text-align:center;
   }
-  #settings-panel button{
-    padding:9px 14px; border-radius:7px; border:1px solid var(--line); background:transparent;
-    color:var(--text); font-family:var(--font-ui); font-size:13px; cursor:pointer;
+  #lock-box button{
+    width:100%; padding:11px; border-radius:7px; border:none; background:var(--gold);
+    color:#241a02; font-weight:650; font-family:var(--font-ui); font-size:14px; cursor:pointer;
   }
-  #settings-status{ font-size:12px; color:var(--muted); margin-top:10px; }
+  #lock-msg{ min-height:16px; font-size:12.5px; color:var(--red); margin-top:10px; }
+  #app-content{ display:none; }
+  #lock-out{
+    background:transparent; border:1px solid var(--line); color:var(--muted);
+    font-family:var(--font-ui); font-size:12px; padding:5px 10px; border-radius:20px; cursor:pointer;
+  }
 
   .log{ max-height:220px; overflow-y:auto; border:1px solid var(--line); border-radius:8px; }
   .log div{ padding:8px 12px; border-bottom:1px solid var(--line); font-family:var(--font-num); font-size:12.5px; color:var(--muted); }
@@ -120,9 +124,24 @@
 </head>
 <body>
 
+<div id="lock-screen">
+  <div id="lock-box">
+    <h1>BIST 4 Saatlik Panel</h1>
+    <p>Devam etmek için şifreyi gir.</p>
+    <input type="password" id="lock-password" placeholder="Şifre" autocomplete="current-password" />
+    <button type="button" id="lock-submit">Gir</button>
+    <div id="lock-msg"></div>
+  </div>
+</div>
+
+<div id="app-content">
+
 <header>
   <h1>BIST <span>4 Saatlik</span> Panel</h1>
-  <div id="meta">yükleniyor…</div>
+  <div style="display:flex; align-items:center; gap:14px;">
+    <div id="meta">yükleniyor…</div>
+    <button type="button" id="lock-out">Kilitle</button>
+  </div>
 </header>
 
 <main>
@@ -156,23 +175,7 @@
 
   <section id="portfolio-section">
     <h2>Sanal Portföy</h2>
-    <p class="sub">Panelde görünen hisselerle, gerçek para kullanmadan al-sat denemesi yapabileceğin bir simülatör. Portföy verisi bu reponun içindeki <code>portfolio.json</code> dosyasında tutulur — bu yüzden hangi tarayıcı/cihazdan girersen gir aynı portföyü görürsün. Görüntülemek için bir şey gerekmez; al-sat yapmak için aşağıdan bu tarayıcıya bir GitHub erişim anahtarı tanımlaman gerekir.</p>
-
-    <button type="button" class="settings-toggle" id="settings-toggle">⚙ Ayarlar / GitHub bağlantısı</button>
-    <div id="settings-panel">
-      <p>Al-sat işlemleri, portföyü <b>bu repoya</b> kaydedebilmek için bir GitHub erişim anahtarı (fine-grained personal access token) gerektirir. Anahtarı yalnızca bu repo için, sadece "Contents: Read and write" izniyle oluştur ve sadece bu tarayıcıda saklanır (repoya gönderilmez, sadece GitHub API isteklerinde kullanılır). Adımlar README'de.</p>
-      <div class="row">
-        <input type="password" id="gh-token-input" placeholder="github_pat_… (erişim anahtarı)" />
-        <button type="button" id="gh-token-save">Kaydet</button>
-        <button type="button" id="gh-token-clear">Kaldır</button>
-      </div>
-      <div id="gh-token-msg" style="font-size:12px; color:var(--red); margin-top:8px; min-height:14px;"></div>
-      <div class="row" style="margin-top:10px;">
-        <input type="text" id="gh-repo-override" placeholder="isteğe bağlı: owner/repo (otomatik algılanamazsa)" />
-        <button type="button" id="gh-repo-save">Repoyu Kaydet</button>
-      </div>
-      <div id="settings-status">bağlı değil — sadece görüntüleme yapılabilir</div>
-    </div>
+    <p class="sub">Panelde görünen hisselerle, gerçek para kullanmadan al-sat denemesi yapabileceğin bir simülatör. Portföy verisi bu reponun içindeki <code>portfolio.json</code> dosyasında tutulur — bu yüzden hangi tarayıcı/cihazdan girersen gir, doğru şifreyi girdiğin sürece aynı portföyü görür ve işlem yapabilirsin.</p>
 
     <div class="grid-3">
       <div class="card stat"><div class="k">Nakit</div><div class="v" id="stat-cash">-</div></div>
@@ -215,14 +218,17 @@
 
 <footer>Veriler Yahoo Finance kaynaklı, gecikmeli olabilir. Bu araç yatırım tavsiyesi değildir, eğitim/deneme amaçlıdır.</footer>
 
+</div><!-- #app-content -->
+
 <script>
 const DATA_URL = "./data.json";
 const START_CASH = 100000;
 
 const GH_TOKEN_KEY = "gh_pat_v1";
-const GH_REPO_OVERRIDE_KEY = "gh_repo_override_v1";
 const PORTFOLIO_API_PATH = "docs/portfolio.json"; // repo köküne göre tam yol (Contents API için)
 const PORTFOLIO_PUBLIC_URL = "./portfolio.json";   // yayınlanan site içindeki göreli yol
+const LOCK_CONFIG_URL = "./site-lock.json";
+const AUTO_REFRESH_MS = 60 * 1000; // tabloyu bu aralıkla otomatik tazele
 
 let stocks = [];         // yüklenen data.json içeriği
 let priceMap = {};        // symbol -> current price
@@ -293,11 +299,6 @@ function renderTable(errors){
 
 // ---------- GitHub üzerinden okuma/yazma ----------
 function getRepoInfo(){
-  const override = localStorage.getItem(GH_REPO_OVERRIDE_KEY);
-  if(override && override.includes("/")){
-    const [owner, repo] = override.split("/");
-    return { owner: owner.trim(), repo: repo.trim() };
-  }
   // https://OWNER.github.io/REPO/...
   const owner = location.hostname.split(".")[0];
   const repo = (location.pathname.split("/").filter(Boolean)[0]) || "";
@@ -397,17 +398,75 @@ async function loadPortfolioRemote(){
   };
 }
 
-function updateSettingsStatus(){
-  const el = document.getElementById("settings-status");
-  const toggle = document.getElementById("settings-toggle");
-  const { owner, repo } = getRepoInfo();
-  if(getToken()){
-    el.textContent = `bağlı — ${owner}/${repo} deposuna işlem kaydedebilirsin`;
-    toggle.classList.add("on");
-  }else{
-    el.textContent = `bağlı değil — sadece görüntüleme (repo algılandı: ${owner}/${repo || "?"})`;
-    toggle.classList.remove("on");
+// ---------- Şifre kilidi (token'ı yalnızca tarayıcıda çözer) ----------
+function b64ToBytes(b64){ return Uint8Array.from(atob(b64), c => c.charCodeAt(0)); }
+
+async function deriveDecryptKey(password, saltB64, iterations){
+  const enc = new TextEncoder();
+  const salt = b64ToBytes(saltB64);
+  const keyMaterial = await crypto.subtle.importKey("raw", enc.encode(password), { name:"PBKDF2" }, false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    { name:"PBKDF2", salt, iterations, hash:"SHA-256" },
+    keyMaterial,
+    { name:"AES-GCM", length:256 },
+    false,
+    ["decrypt"]
+  );
+}
+
+async function unlockWithPassword(password){
+  const res = await fetch(LOCK_CONFIG_URL + "?t=" + Date.now());
+  if(!res.ok) throw new Error("site-lock.json okunamadı — önce docs/setup.html ile kilidi kurmalısın.");
+  const cfg = await res.json();
+  if(!cfg.ciphertext) throw new Error("site-lock.json henüz kurulmamış (docs/setup.html ile kur).");
+  const key = await deriveDecryptKey(password, cfg.salt, cfg.iterations);
+  const iv = b64ToBytes(cfg.iv);
+  const ciphertext = b64ToBytes(cfg.ciphertext);
+  let plainBuf;
+  try{
+    plainBuf = await crypto.subtle.decrypt({ name:"AES-GCM", iv }, key, ciphertext);
+  }catch(e){
+    throw new Error("Şifre yanlış.");
   }
+  return new TextDecoder().decode(plainBuf);
+}
+
+function showLockMsg(text){ document.getElementById("lock-msg").textContent = text || ""; }
+
+function enterApp(){
+  document.getElementById("lock-screen").style.display = "none";
+  document.getElementById("app-content").style.display = "block";
+  init();
+  setInterval(loadData, AUTO_REFRESH_MS); // fiyat/göstergeleri periyodik tazele
+}
+
+document.getElementById("lock-submit").addEventListener("click", doUnlock);
+document.getElementById("lock-password").addEventListener("keydown", e => { if(e.key === "Enter") doUnlock(); });
+
+async function doUnlock(){
+  const pw = document.getElementById("lock-password").value;
+  if(!pw) return;
+  showLockMsg("kontrol ediliyor…");
+  try{
+    const token = await unlockWithPassword(pw);
+    localStorage.setItem(GH_TOKEN_KEY, token);
+    document.getElementById("lock-password").value = "";
+    showLockMsg("");
+    enterApp();
+  }catch(err){
+    showLockMsg(err.message || String(err));
+  }
+}
+
+document.getElementById("lock-out").addEventListener("click", () => {
+  localStorage.removeItem(GH_TOKEN_KEY);
+  document.getElementById("app-content").style.display = "none";
+  document.getElementById("lock-screen").style.display = "flex";
+});
+
+// Bu cihazda daha önce doğru şifre girildiyse tekrar sorma.
+if(getToken()){
+  enterApp();
 }
 
 function populateSymbolSelect(){
@@ -535,7 +594,7 @@ function resetPortfolio(){
 async function commitPortfolio(buildDraft, successMsgFn){
   if(portfolioBusy) return showMsg("Bir işlem daha sürüyor, biraz bekle.", true);
   if(!getToken()){
-    return showMsg("İşlem yapmak için önce Ayarlar'dan GitHub erişim anahtarını gir.", true);
+    return showMsg("Bağlantı koptu, sayfayı yenileyip şifreyi tekrar gir.", true);
   }
   portfolioBusy = true;
   const previousLocal = portfolio;
@@ -569,41 +628,6 @@ document.getElementById("btn-buy").addEventListener("click", buy);
 document.getElementById("btn-sell").addEventListener("click", sell);
 document.getElementById("btn-reset").addEventListener("click", resetPortfolio);
 
-document.getElementById("settings-toggle").addEventListener("click", () => {
-  document.getElementById("settings-panel").classList.toggle("open");
-});
-document.getElementById("gh-token-save").addEventListener("click", () => {
-  const raw = document.getElementById("gh-token-input").value;
-  // Kopyala-yapıştırdan gelebilecek görünmez/beyaz boşluk karakterlerini de temizle.
-  const val = raw.replace(/\s+/g, "");
-  const msgEl = document.getElementById("gh-token-msg");
-  if(!val){ msgEl.textContent = ""; return; }
-  if(!/^[A-Za-z0-9_]+$/.test(val)){
-    msgEl.textContent = "Bu değer geçerli bir GitHub token'ına benzemiyor (yalnızca harf, rakam ve alt çizgi içermeli). Token'ı GitHub'daki sayfadan tekrar kopyalayıp yalnızca onu yapıştır.";
-    return;
-  }
-  msgEl.textContent = "";
-  localStorage.setItem(GH_TOKEN_KEY, val);
-  document.getElementById("gh-token-input").value = "";
-  updateSettingsStatus();
-  init();
-});
-document.getElementById("gh-token-clear").addEventListener("click", () => {
-  localStorage.removeItem(GH_TOKEN_KEY);
-  document.getElementById("gh-token-msg").textContent = "";
-  updateSettingsStatus();
-});
-document.getElementById("gh-repo-save").addEventListener("click", () => {
-  const val = document.getElementById("gh-repo-override").value.trim();
-  if(val) localStorage.setItem(GH_REPO_OVERRIDE_KEY, val);
-  else localStorage.removeItem(GH_REPO_OVERRIDE_KEY);
-  updateSettingsStatus();
-});
-
-const savedOverride = localStorage.getItem(GH_REPO_OVERRIDE_KEY);
-if(savedOverride) document.getElementById("gh-repo-override").value = savedOverride;
-updateSettingsStatus();
-
 async function init(){
   try{
     portfolio = await loadPortfolioRemote();
@@ -613,8 +637,6 @@ async function init(){
   }
   await loadData(); // renderPortfolio() içinde çağrılıyor
 }
-
-init();
 </script>
 </body>
 </html>
