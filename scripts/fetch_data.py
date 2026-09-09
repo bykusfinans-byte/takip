@@ -15,6 +15,7 @@ import os
 import random
 import sys
 import time
+import zoneinfo
 from datetime import datetime, timezone
 
 import numpy as np
@@ -33,7 +34,26 @@ SESSION_START = "10:00"   # BIST açılış (Europe/Istanbul)
 LOOKBACK = "60d"          # 1 saatlik veri için geriye dönük aralık
 INTERVAL = "60m"
 
+# Betik yalnızca bu pencerede Yahoo Finance'e istek atar. Dışarıdan
+# (ör. cron-job.org, GitHub schedule, elle "Run workflow") ne zaman
+# tetiklenirse tetiklensin, seans dışıysa/hafta sonuysa hiçbir istek
+# atmadan çıkar — bu, Yahoo'ya olası aşırı yüklenmeye/rate-limit'e karşı
+# script seviyesindeki güvence.
+SESSION_START_HOUR = 9   # birkaç dakika tolerans için 09:55 gibi düşün
+SESSION_START_MIN = 55
+SESSION_END_HOUR = 18
+SESSION_END_MIN = 10
+
 OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "docs", "data.json")
+
+
+def within_trading_window() -> bool:
+    now = datetime.now(zoneinfo.ZoneInfo("Europe/Istanbul"))
+    if now.weekday() >= 5:  # 5=Cumartesi, 6=Pazar
+        return False
+    start = now.replace(hour=SESSION_START_HOUR, minute=SESSION_START_MIN, second=0, microsecond=0)
+    end = now.replace(hour=SESSION_END_HOUR, minute=SESSION_END_MIN, second=0, microsecond=0)
+    return start <= now <= end
 
 
 def ema(s: pd.Series, span: int) -> pd.Series:
@@ -170,6 +190,10 @@ def fetch_symbol(symbol: str):
 
 
 def main():
+    if not within_trading_window():
+        print("BIST seansı dışında (ya da hafta sonu) — Yahoo Finance'e istek atılmadan çıkılıyor.")
+        return
+
     results = []
     errors = []
     for sym in SYMBOLS:
@@ -181,7 +205,7 @@ def main():
                 errors.append(f"{sym}: yetersiz veri")
         except Exception as exc:  # noqa: BLE001
             errors.append(f"{sym}: {exc}")
-        time.sleep(1.5)  # istekler arasına küçük bekleme -> rate-limit riskini azaltır
+        time.sleep(2)  # istekler arasına bekleme -> rate-limit riskini azaltır
 
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
