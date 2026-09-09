@@ -1,13 +1,5 @@
 {
-  "cash": 99464,
-  "positions": {
-    "SASA": {
-      "qty": 200,
-      "avgCost": 2.68
-    }
-  },
-  "log": [
-    "[8.09.2026 11:15] Portföy sıfırlandı.",
-    "[8.09.2026 11:15] AL — 200 adet SASA @ 2,68 TL (toplam 536,00 TL)"
-  ]
+  "cash": 100000,
+  "positions": {},
+  "log": []
 }
