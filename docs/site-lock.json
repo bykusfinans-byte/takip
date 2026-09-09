@@ -1,3 +1,6 @@
 {
-  "note": "Bu dosya henüz kurulmadı. docs/setup.html sayfasını aç, token'ını ve site şifreni gir, çıkan JSON'u bu dosyanın TAMAMININ yerine yapıştırıp commit'le."
+  "salt": "01o93ph6uovou83+VejlEQ==",
+  "iv": "Yc4L6AC3zvFwGJeG",
+  "ciphertext": "OIfBqkwLVTWJiUTI+9xMagcnWsC0go5Ak6/CGBO6tSXbcD2El+cr7ptNVZDfFIkLykuWw3L3JU6ks0qQFP4vl3seA6M6a8f5KR/KnJtMPJqbL8TKDidj9nWW2iDINcMdW0ctuvyogfMjZ6gR2w==",
+  "iterations": 250000
 }
