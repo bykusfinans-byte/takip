@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<title>Kurulum — Site Kilidi Oluştur</title>
+<style>
+  body{ background:#0d1117; color:#e6edf3; font-family:-apple-system,"Segoe UI",sans-serif; max-width:640px; margin:40px auto; padding:0 20px; line-height:1.55; }
+  h1{ font-size:20px; }
+  label{ display:block; margin:18px 0 6px; font-size:13px; color:#8b98a5; }
+  input{ width:100%; padding:10px; border-radius:7px; border:1px solid #232c37; background:#171f28; color:#e6edf3; font-family:ui-monospace,monospace; box-sizing:border-box; }
+  button{ margin-top:18px; padding:10px 18px; border-radius:7px; border:none; background:#2ea043; color:#04150a; font-weight:600; cursor:pointer; }
+  textarea{ width:100%; height:160px; margin-top:16px; background:#171f28; color:#e6edf3; border:1px solid #232c37; border-radius:7px; padding:10px; font-family:ui-monospace,monospace; font-size:12.5px; box-sizing:border-box; }
+  .warn{ background:rgba(229,83,75,0.12); border:1px solid rgba(229,83,75,0.4); padding:12px 14px; border-radius:8px; font-size:13px; margin:16px 0; }
+  .ok{ background:rgba(46,160,67,0.12); border:1px solid rgba(46,160,67,0.4); padding:12px 14px; border-radius:8px; font-size:13px; margin:16px 0; display:none; }
+  code{ background:#171f28; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+  <h1>Site kilidi oluştur</h1>
+  <p>Bu sayfa <b>tamamen tarayıcında</b> çalışır, hiçbir yere veri göndermez. GitHub token'ını ve seçtiğin site şifresini burada birleştirip şifreliyor; sonucu <code>docs/site-lock.json</code> olarak repona kaydedeceksin. Bu dosya public repoda görünür olacak ama içindeki token, şifreni bilmeyen biri için okunaksız bir bloktur.</p>
+
+  <div class="warn">
+    Bu, bankacılık seviyesinde güvenlik sağlamaz — herkese açık bir denemelik
+    araç için yeterlidir. Güçlü, tahmin edilmesi zor bir şifre seç (kısa/basit
+    şifreler çevrimdışı denenerek kırılabilir).
+  </div>
+
+  <label>GitHub erişim anahtarı (github_pat_…)</label>
+  <input type="password" id="token" autocomplete="off" />
+
+  <label>Site şifresi (siteye girerken kullanacağın şifre)</label>
+  <input type="password" id="password" autocomplete="off" />
+
+  <button id="go">Şifrele</button>
+
+  <div class="ok" id="result-box">
+    <p>Aşağıdaki içeriği kopyala, repondaki <code>docs/site-lock.json</code> dosyasının
+    <b>tamamının yerine</b> yapıştır ve commit'le:</p>
+    <textarea id="result" readonly></textarea>
+  </div>
+
+<script>
+function b64(bytes){ return btoa(String.fromCharCode(...bytes)); }
+
+async function deriveKey(password, salt, iterations){
+  const enc = new TextEncoder();
+  const keyMaterial = await crypto.subtle.importKey("raw", enc.encode(password), {name:"PBKDF2"}, false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    { name:"PBKDF2", salt, iterations, hash:"SHA-256" },
+    keyMaterial,
+    { name:"AES-GCM", length:256 },
+    false,
+    ["encrypt"]
+  );
+}
+
+document.getElementById("go").addEventListener("click", async () => {
+  const token = document.getElementById("token").value.trim();
+  const password = document.getElementById("password").value;
+  if(!token || !password){ alert("Her iki alanı da doldur."); return; }
+
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const iterations = 250000;
+  const key = await deriveKey(password, salt, iterations);
+  const enc = new TextEncoder();
+  const ciphertextBuf = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(token));
+
+  const out = {
+    salt: b64(salt),
+    iv: b64(iv),
+    ciphertext: b64(new Uint8Array(ciphertextBuf)),
+    iterations
+  };
+
+  document.getElementById("result").value = JSON.stringify(out, null, 2);
+  document.getElementById("result-box").style.display = "block";
+});
+</script>
+</body>
+</html>
