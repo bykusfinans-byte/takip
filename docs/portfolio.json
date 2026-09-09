@@ -1,12 +1,17 @@
 {
-  "cash": 95484,
+  "cash": 87174,
   "positions": {
     "SISE": {
       "qty": 100,
       "avgCost": 45.16
+    },
+    "FROTO": {
+      "qty": 100,
+      "avgCost": 83.1
     }
   },
   "log": [
-    "[9.09.2026 10:52] AL — 100 adet SISE @ 45,16 TL (toplam 4.516,00 TL)"
+    "[9.09.2026 10:52] AL — 100 adet SISE @ 45,16 TL (toplam 4.516,00 TL)",
+    "[9.09.2026 10:52] AL — 100 adet FROTO @ 83,10 TL (toplam 8.310,00 TL)"
   ]
 }
