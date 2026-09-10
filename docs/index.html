@@ -65,6 +65,19 @@
     padding:2px 7px; border-radius:20px; background:var(--green-bg); color:var(--green);
   }
 
+  /* Sinyal rozetleri */
+  .sig{
+    display:inline-block; font-family:var(--font-ui); font-size:11.5px; font-weight:650;
+    padding:3px 9px; border-radius:20px; white-space:nowrap;
+  }
+  .sig-guclu-al{ background:rgba(46,160,67,0.22); color:#3fd160; }
+  .sig-al{ background:rgba(46,160,67,0.12); color:#7fd99a; }
+  .sig-guclu-sat{ background:rgba(229,83,75,0.22); color:#ff8079; }
+  .sig-sat{ background:rgba(229,83,75,0.12); color:#e5a39e; }
+  .sig-yukari, .sig-asagi{ background:rgba(201,150,58,0.18); color:var(--gold); }
+  .sig-notr{ background:rgba(255,255,255,0.06); color:var(--muted); }
+  .sig-prev{ display:block; margin-top:3px; }
+
   .card{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px; }
   .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
   @media (max-width: 720px){ .grid-3{ grid-template-columns:1fr; } }
@@ -154,7 +167,7 @@
 
   <section id="panel-section">
     <h2>Gösterge Tablosu</h2>
-    <p class="sub">Her hücrenin altındaki küçük değer bir önceki 4 saatlik mumu gösterir. Fiyat &gt; EMA9 &gt; EMA21 &gt; SMA50, ADX &gt; 25 ve MACD &gt; 0 koşulunu sağlayan satırlar yeşil vurgulanır.</p>
+    <p class="sub">Her hücrenin altındaki küçük değer bir önceki 4 saatlik mumu gösterir. Fiyat &gt; EMA9 &gt; EMA21 &gt; SMA50, ADX &gt; 25 ve MACD &gt; 0 koşulunu sağlayan satırlar yeşil vurgulanır. Sinyal sütunu <a href="https://github.com/sydemiryilmaz32/bist-sinyal-takip" target="_blank" rel="noopener">bist-sinyal-takip</a> projesindeki kategorizasyonu kullanır: fiyat/EMA9/EMA21/SMA50 sıralamasına göre GÜÇLÜ AL / AL / SAT / GÜÇLÜ SAT / YUKARI / AŞAĞI / NÖTR.</p>
     <div class="legend">
       <span><span class="dot" style="background:var(--green)"></span>Trend + momentum koşulu sağlanıyor</span>
     </div>
@@ -170,10 +183,26 @@
             <th>MACD</th>
             <th>ADX</th>
             <th>RSI</th>
+            <th>Sinyal</th>
           </tr>
         </thead>
         <tbody id="tbody">
-          <tr><td colspan="8" class="empty">Veri bekleniyor…</td></tr>
+          <tr><td colspan="9" class="empty">Veri bekleniyor…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="signal-changes-section">
+    <h2>Sinyal Değişimleri</h2>
+    <p class="sub">Bir önceki 4 saatlik muma göre kategorisi değişen hisseler (ör. AL → GÜÇLÜ AL).</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Hisse</th><th>Önceki</th><th>Yeni</th><th>Fiyat</th></tr>
+        </thead>
+        <tbody id="signal-changes-tbody">
+          <tr><td colspan="4" class="empty">Veri bekleniyor…</td></tr>
         </tbody>
       </table>
     </div>
@@ -266,7 +295,7 @@ async function loadData(){
     meta.textContent = "veri yüklenemedi";
     console.error(err);
     document.getElementById("tbody").innerHTML =
-      `<tr><td colspan="8" class="empty">Veri yüklenemedi: ${err.message || err}<br>
+      `<tr><td colspan="9" class="empty">Veri yüklenemedi: ${err.message || err}<br>
        (data.json dosyasının konumunu ve GitHub Actions'ın çalışıp çalışmadığını kontrol et)</td></tr>`;
     document.getElementById("f-symbol").innerHTML = "";
   }
@@ -277,18 +306,31 @@ function fmt(n, d=2){
   return Number(n).toLocaleString("tr-TR", { minimumFractionDigits:d, maximumFractionDigits:d });
 }
 
+function sigClass(sig){
+  const map = { "ü":"u", "ç":"c", "ş":"s", "ğ":"g", "ö":"o", "ı":"i" };
+  const ascii = (sig || "").toLowerCase().replace(/[üçşğöı]/g, ch => map[ch]);
+  return "sig sig-" + ascii.replace(/\s+/g, "-");
+}
+function sigBadge(sig){
+  return `<span class="${sigClass(sig)}">${sig}</span>`;
+}
+
 function renderTable(errors){
   const tbody = document.getElementById("tbody");
   if(!stocks.length){
     const errHtml = (errors && errors.length)
       ? `<br><span style="color:var(--red)">Hatalar: ${errors.join(" · ")}</span>`
       : "";
-    tbody.innerHTML = `<tr><td colspan="8" class="empty">Henüz veri yok — GitHub Actions workflow'unu Actions sekmesinden "Run workflow" ile elle çalıştırıp birkaç dakika bekle.${errHtml}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="9" class="empty">Henüz veri yok — GitHub Actions workflow'unu Actions sekmesinden "Run workflow" ile elle çalıştırıp birkaç dakika bekle.${errHtml}</td></tr>`;
+    renderSignalChanges();
     return;
   }
   tbody.innerHTML = stocks.map(s => {
     const c = s.current, p = s.previous;
     const cell = (curVal, prevVal, d=2) => `${fmt(curVal,d)}<span class="prev">${fmt(prevVal,d)}</span>`;
+    const sigCell = c.signal === p.signal
+      ? sigBadge(c.signal)
+      : `${sigBadge(c.signal)}<span class="sig-prev prev">${p.signal}</span>`;
     return `
       <tr class="${c.highlight ? 'hit' : ''}">
         <td class="sym">${s.symbol}${c.highlight ? ' <span class="badge">uyumlu</span>' : ''}</td>
@@ -299,8 +341,26 @@ function renderTable(errors){
         <td>${cell(c.macd, p.macd, 3)}</td>
         <td>${cell(c.adx, p.adx)}</td>
         <td>${cell(c.rsi, p.rsi)}</td>
+        <td>${sigCell}</td>
       </tr>`;
   }).join("");
+  renderSignalChanges();
+}
+
+function renderSignalChanges(){
+  const tbody = document.getElementById("signal-changes-tbody");
+  const changed = stocks.filter(s => s.current.signal !== s.previous.signal);
+  if(!changed.length){
+    tbody.innerHTML = '<tr><td colspan="4" class="empty">Bu güncellemede sinyal değişikliği yok.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = changed.map(s => `
+    <tr>
+      <td class="sym">${s.symbol}</td>
+      <td>${sigBadge(s.previous.signal)}</td>
+      <td>${sigBadge(s.current.signal)}</td>
+      <td>${fmt(s.current.price)}</td>
+    </tr>`).join("");
 }
 
 // ---------- GitHub üzerinden okuma/yazma ----------
