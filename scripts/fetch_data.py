@@ -136,6 +136,41 @@ def _download_with_retry(symbol: str, attempts: int = 3) -> pd.DataFrame:
     raise RuntimeError(f"indirilemedi ({last_err})")
 
 
+def compute_signal(price: float, e9: float, e21: float, s50: float) -> str:
+    """sydemiryilmaz32/bist-sinyal-takip projesindeki kategorizasyon mantığı."""
+    if price > e9 > e21 > s50:
+        return "GÜÇLÜ AL"
+    elif price > e9 > e21:
+        return "AL"
+    elif price < e9 < e21 < s50:
+        return "GÜÇLÜ SAT"
+    elif price < e9 < e21:
+        return "SAT"
+    elif e9 > e21 and price > e9:
+        return "YUKARI"
+    elif e9 < e21 and price < e9:
+        return "AŞAĞI"
+    else:
+        return "NÖTR"
+
+
+def bar_to_dict(row: pd.Series, idx: pd.Timestamp):
+    price, e9, e21, s50 = row["Close"], row["EMA9"], row["EMA21"], row["SMA50"]
+    cond = (price > e9 > e21 > s50) and (row["ADX"] > 25) and (row["MACD"] > 0)
+    return {
+        "time": idx.isoformat(),
+        "price": round(float(price), 2),
+        "ema9": round(float(e9), 2),
+        "ema21": round(float(e21), 2),
+        "sma50": round(float(s50), 2),
+        "macd": round(float(row["MACD"]), 4),
+        "adx": round(float(row["ADX"]), 2),
+        "rsi": round(float(row["RSI"]), 2),
+        "highlight": bool(cond),
+        "signal": compute_signal(float(price), float(e9), float(e21), float(s50)),
+    }
+
+
 def fetch_symbol(symbol: str):
     raw = _download_with_retry(symbol)
     if raw.empty:
@@ -165,21 +200,6 @@ def fetch_symbol(symbol: str):
     df4h = df4h.dropna()
     if len(df4h) < 2:
         return None
-
-    def bar_to_dict(row: pd.Series, idx: pd.Timestamp):
-        price, e9, e21, s50 = row["Close"], row["EMA9"], row["EMA21"], row["SMA50"]
-        cond = (price > e9 > e21 > s50) and (row["ADX"] > 25) and (row["MACD"] > 0)
-        return {
-            "time": idx.isoformat(),
-            "price": round(float(price), 2),
-            "ema9": round(float(e9), 2),
-            "ema21": round(float(e21), 2),
-            "sma50": round(float(s50), 2),
-            "macd": round(float(row["MACD"]), 4),
-            "adx": round(float(row["ADX"]), 2),
-            "rsi": round(float(row["RSI"]), 2),
-            "highlight": bool(cond),
-        }
 
     current_idx, prev_idx = df4h.index[-1], df4h.index[-2]
     return {
