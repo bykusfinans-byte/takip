@@ -1,5 +1,5 @@
 {
-  "cash": 85723,
+  "cash": 18273,
   "positions": {
     "SISE": {
       "qty": 100,
@@ -12,11 +12,16 @@
     "ISCTR": {
       "qty": 100,
       "avgCost": 14.51
+    },
+    "GARAN": {
+      "qty": 500,
+      "avgCost": 134.9
     }
   },
   "log": [
     "[9.09.2026 10:52] AL — 100 adet SISE @ 45,16 TL (toplam 4.516,00 TL)",
     "[9.09.2026 10:52] AL — 100 adet FROTO @ 83,10 TL (toplam 8.310,00 TL)",
-    "[9.09.2026 15:47] AL — 100 adet ISCTR @ 14,51 TL (toplam 1.451,00 TL)"
+    "[9.09.2026 15:47] AL — 100 adet ISCTR @ 14,51 TL (toplam 1.451,00 TL)",
+    "[10.09.2026 11:21] AL — 500 adet GARAN @ 134,90 TL (toplam 67.450,00 TL)"
   ]
 }
