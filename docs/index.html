@@ -112,6 +112,11 @@
     background:transparent; border:1px solid var(--line); color:var(--muted);
     font-family:var(--font-ui); font-size:12px; padding:5px 10px; border-radius:20px; cursor:pointer;
   }
+  #refresh-now{
+    background:transparent; border:1px solid rgba(212,160,58,0.4); color:var(--gold);
+    font-family:var(--font-ui); font-size:12px; padding:5px 10px; border-radius:20px; cursor:pointer;
+  }
+  #refresh-now:disabled{ opacity:0.5; cursor:default; }
 
   .log{ max-height:220px; overflow-y:auto; border:1px solid var(--line); border-radius:8px; }
   .log div{ padding:8px 12px; border-bottom:1px solid var(--line); font-family:var(--font-num); font-size:12.5px; color:var(--muted); }
@@ -140,6 +145,7 @@
   <h1>BIST <span>4 Saatlik</span> Panel</h1>
   <div style="display:flex; align-items:center; gap:14px;">
     <div id="meta">yükleniyor…</div>
+    <button type="button" id="refresh-now">🔄 Şimdi Güncelle</button>
     <button type="button" id="lock-out">Kilitle</button>
   </div>
 </header>
@@ -312,9 +318,9 @@ function getToken(){ return (localStorage.getItem(GH_TOKEN_KEY) || "").trim(); }
 // karışırsa tarayıcı fetch header'ında anlaşılmaz bir hata verir — burada
 // bunu erkenden yakalayıp anlaşılır bir mesaja çeviriyoruz.
 function assertValidToken(token){
-  if(!token) throw new Error("Önce Ayarlar'dan GitHub erişim anahtarını gir.");
+  if(!token) throw new Error("Önce şifreyi girip kilidi aç.");
   if(!/^[A-Za-z0-9_]+$/.test(token)){
-    throw new Error("Kayıtlı GitHub token'ı geçersiz görünüyor (beklenmeyen karakter içeriyor). Ayarlar'dan token'ı Kaldır'a basıp yalnızca token metnini (başında/sonunda boşluk olmadan) tekrar yapıştır.");
+    throw new Error("Kayıtlı GitHub token'ı geçersiz görünüyor. Üstteki 'Kilitle' butonuna basıp şifreyi tekrar gir.");
   }
   return token;
 }
@@ -357,6 +363,27 @@ async function ghApiPutFile(path, dataObj, sha, message){
     throw new Error(`GitHub'a yazılamadı (HTTP ${res.status}) ${text.slice(0,200)}`);
   }
   return res.json();
+}
+
+// "Şimdi Güncelle" butonu: GitHub Actions workflow'unu API üzerinden tetikler
+// (workflow dosyasındaki workflow_dispatch sayesinde). Token'ın bunun için
+// "Actions: Read and write" iznine de sahip olması gerekir.
+async function ghDispatchWorkflow(){
+  const { owner, repo } = getRepoInfo();
+  const token = assertValidToken(getToken());
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/update-data.yml/dispatches`, {
+    method: "POST",
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ ref: "main" })
+  });
+  if(!res.ok){
+    const text = await res.text().catch(()=> "");
+    throw new Error(`Tetiklenemedi (HTTP ${res.status}) ${text.slice(0,200)}`);
+  }
 }
 
 // Kaydetme: her denemede güncel sha'yı yeniden alır (çakışma riskini azaltır),
@@ -462,6 +489,32 @@ document.getElementById("lock-out").addEventListener("click", () => {
   localStorage.removeItem(GH_TOKEN_KEY);
   document.getElementById("app-content").style.display = "none";
   document.getElementById("lock-screen").style.display = "flex";
+});
+
+document.getElementById("refresh-now").addEventListener("click", async () => {
+  const btn = document.getElementById("refresh-now");
+  const meta = document.getElementById("meta");
+  if(btn.disabled) return;
+  btn.disabled = true;
+  const original = btn.textContent;
+  btn.textContent = "tetikleniyor…";
+  try{
+    await ghDispatchWorkflow();
+    meta.textContent = "güncelleme başlatıldı — genelde 1-3 dakika sürer, sayfa kendini otomatik tazeler";
+    // Tetiklemeden sonra birkaç dakika daha sık kontrol et (15sn arayla, 8 kez ~ 2dk)
+    let checks = 0;
+    const fastPoll = setInterval(async () => {
+      checks++;
+      await loadData();
+      if(checks >= 8) clearInterval(fastPoll);
+    }, 15000);
+  }catch(err){
+    console.error(err);
+    meta.textContent = "Tetiklenemedi: " + (err.message || err);
+  }finally{
+    btn.disabled = false;
+    btn.textContent = original;
+  }
 });
 
 // Bu cihazda daha önce doğru şifre girildiyse tekrar sorma.
