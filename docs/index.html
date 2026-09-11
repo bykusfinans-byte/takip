@@ -130,6 +130,19 @@
     font-family:var(--font-ui); font-size:12px; padding:5px 10px; border-radius:20px; cursor:pointer;
   }
   #refresh-now:disabled{ opacity:0.5; cursor:default; }
+  #analiz-toggle{
+    background:transparent; border:1px solid var(--line); color:var(--text);
+    font-family:var(--font-ui); font-size:12px; padding:5px 10px; border-radius:20px; cursor:pointer;
+  }
+  #analiz-toggle.on{ border-color:rgba(212,160,58,0.5); color:var(--gold); }
+
+  .tv-wrap{
+    width:100%; height:70vh; min-height:380px; max-height:640px;
+    border-radius:10px; overflow:hidden; border:1px solid var(--line);
+  }
+  @media (max-width:640px){
+    .tv-wrap{ height:56vh; min-height:320px; }
+  }
 
   .log{ max-height:220px; overflow-y:auto; border:1px solid var(--line); border-radius:8px; }
   .log div{ padding:8px 12px; border-bottom:1px solid var(--line); font-family:var(--font-num); font-size:12.5px; color:var(--muted); }
@@ -156,14 +169,21 @@
 
 <header>
   <h1>BIST <span>4 Saatlik</span> Panel</h1>
-  <div style="display:flex; align-items:center; gap:14px;">
+  <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
     <div id="meta">yükleniyor…</div>
     <button type="button" id="refresh-now">🔄 Şimdi Güncelle</button>
+    <button type="button" id="analiz-toggle">📈 Analiz</button>
     <button type="button" id="lock-out">Kilitle</button>
   </div>
 </header>
 
 <main>
+
+  <section id="analiz-section" style="display:none;">
+    <h2>Analiz</h2>
+    <p class="sub">TradingView grafiği (varsayılan BIST XU100, 4 saatlik). Grafiğin üstündeki sembol kutusundan istediğin hisseye geçebilirsin.</p>
+    <div id="tv-container" class="tv-wrap"></div>
+  </section>
 
   <section id="panel-section">
     <h2>Gösterge Tablosu</h2>
@@ -574,6 +594,74 @@ document.getElementById("refresh-now").addEventListener("click", async () => {
   }finally{
     btn.disabled = false;
     btn.textContent = original;
+  }
+});
+
+// ---------- Analiz (TradingView grafiği) ----------
+let tvWidgetLoaded = false;
+
+function loadTradingViewWidget(){
+  const container = document.getElementById("tv-container");
+  const widgetDiv = document.createElement("div");
+  widgetDiv.className = "tradingview-widget-container";
+  widgetDiv.style.height = "100%";
+  widgetDiv.style.width = "100%";
+
+  const inner = document.createElement("div");
+  inner.className = "tradingview-widget-container__widget";
+  inner.style.height = "100%";
+  inner.style.width = "100%";
+  widgetDiv.appendChild(inner);
+
+  const script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+  script.async = true;
+  script.text = JSON.stringify({
+    allow_symbol_change: true,
+    calendar: false,
+    details: false,
+    hide_side_toolbar: true,
+    hide_top_toolbar: false,
+    hide_legend: false,
+    hide_volume: false,
+    hotlist: false,
+    interval: "240",
+    locale: "tr",
+    save_image: true,
+    style: "1",
+    symbol: "BIST:XU100",
+    theme: "dark",
+    timezone: "Europe/Istanbul",
+    backgroundColor: "#0F0F0F",
+    gridColor: "rgba(242, 242, 242, 0.2)",
+    watchlist: [],
+    withdateranges: false,
+    compareSymbols: [],
+    support_host: "https://www.tradingview.com",
+    studies: [],
+    autosize: true
+  });
+  widgetDiv.appendChild(script);
+
+  container.appendChild(widgetDiv);
+}
+
+document.getElementById("analiz-toggle").addEventListener("click", () => {
+  const section = document.getElementById("analiz-section");
+  const btn = document.getElementById("analiz-toggle");
+  const isHidden = section.style.display === "none" || !section.style.display;
+  if(isHidden){
+    section.style.display = "block";
+    btn.classList.add("on");
+    if(!tvWidgetLoaded){
+      loadTradingViewWidget();
+      tvWidgetLoaded = true;
+    }
+    section.scrollIntoView({ behavior:"smooth", block:"start" });
+  }else{
+    section.style.display = "none";
+    btn.classList.remove("on");
   }
 });
 
