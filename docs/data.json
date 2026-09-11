@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-11T11:10:48.731395+00:00",
+  "generated_at": "2026-09-11T11:11:53.743800+00:00",
   "timeframe": "4h",
   "stocks": [
     {
@@ -11,7 +11,7 @@
         "ema21": 299.63,
         "sma50": 301.0,
         "macd": 0.1179,
-        "adx": 14.51,
+        "adx": 14.53,
         "rsi": 53.08,
         "highlight": false,
         "signal": "AL"
@@ -23,7 +23,7 @@
         "ema21": 299.5,
         "sma50": 301.0,
         "macd": 0.0114,
-        "adx": 14.88,
+        "adx": 14.9,
         "rsi": 48.89,
         "highlight": false,
         "signal": "NÖTR"
@@ -60,13 +60,13 @@
       "symbol": "GARAN",
       "current": {
         "time": "2026-09-11T10:00:00+03:00",
-        "price": 134.7,
-        "ema9": 134.16,
-        "ema21": 133.66,
+        "price": 134.6,
+        "ema9": 134.14,
+        "ema21": 133.65,
         "sma50": 132.81,
-        "macd": 0.5618,
+        "macd": 0.5538,
         "adx": 8.33,
-        "rsi": 55.11,
+        "rsi": 54.77,
         "highlight": false,
         "signal": "GÜÇLÜ AL"
       },
@@ -87,13 +87,13 @@
       "symbol": "AKBNK",
       "current": {
         "time": "2026-09-11T10:00:00+03:00",
-        "price": 72.85,
-        "ema9": 72.92,
+        "price": 72.8,
+        "ema9": 72.91,
         "ema21": 72.81,
         "sma50": 72.32,
-        "macd": 0.242,
+        "macd": 0.238,
         "adx": 14.31,
-        "rsi": 50.99,
+        "rsi": 50.74,
         "highlight": false,
         "signal": "NÖTR"
       },
@@ -114,13 +114,13 @@
       "symbol": "EREGL",
       "current": {
         "time": "2026-09-11T10:00:00+03:00",
-        "price": 39.26,
+        "price": 39.28,
         "ema9": 38.95,
         "ema21": 38.64,
         "sma50": 38.39,
-        "macd": 0.2768,
+        "macd": 0.2784,
         "adx": 17.02,
-        "rsi": 57.19,
+        "rsi": 57.35,
         "highlight": false,
         "signal": "GÜÇLÜ AL"
       },
@@ -168,13 +168,13 @@
       "symbol": "SISE",
       "current": {
         "time": "2026-09-11T10:00:00+03:00",
-        "price": 43.92,
-        "ema9": 43.86,
+        "price": 43.94,
+        "ema9": 43.87,
         "ema21": 42.69,
         "sma50": 40.77,
-        "macd": 1.225,
+        "macd": 1.2266,
         "adx": 43.82,
-        "rsi": 59.82,
+        "rsi": 59.91,
         "highlight": true,
         "signal": "GÜÇLÜ AL"
       },
@@ -357,13 +357,13 @@
       "symbol": "ISCTR",
       "current": {
         "time": "2026-09-11T10:00:00+03:00",
-        "price": 13.77,
+        "price": 13.76,
         "ema9": 13.77,
         "ema21": 13.52,
         "sma50": 12.99,
-        "macd": 0.2839,
+        "macd": 0.2831,
         "adx": 36.37,
-        "rsi": 59.61,
+        "rsi": 59.41,
         "highlight": false,
         "signal": "NÖTR"
       },
@@ -384,13 +384,13 @@
       "symbol": "YKBNK",
       "current": {
         "time": "2026-09-11T10:00:00+03:00",
-        "price": 36.5,
-        "ema9": 36.51,
+        "price": 36.46,
+        "ema9": 36.5,
         "ema21": 36.48,
         "sma50": 36.41,
-        "macd": 0.0529,
+        "macd": 0.0497,
         "adx": 17.39,
-        "rsi": 50.66,
+        "rsi": 50.17,
         "highlight": false,
         "signal": "NÖTR"
       },
