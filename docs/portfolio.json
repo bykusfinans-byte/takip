@@ -1,7 +1,13 @@
 {
-  "cash": 100000,
-  "positions": {},
+  "cash": 86560,
+  "positions": {
+    "GARAN": {
+      "qty": 100,
+      "avgCost": 134.4
+    }
+  },
   "log": [
-    "[14.09.2026 10:48] Portföy sıfırlandı."
+    "[14.09.2026 10:48] Portföy sıfırlandı.",
+    "[14.09.2026 10:48] AL — 100 adet GARAN @ 134,40 TL (toplam 13.440,00 TL)"
   ]
 }
