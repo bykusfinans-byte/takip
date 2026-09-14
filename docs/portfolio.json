@@ -1,5 +1,5 @@
 {
-  "cash": 81385,
+  "cash": 38010,
   "positions": {
     "GARAN": {
       "qty": 100,
@@ -8,11 +8,16 @@
     "TCELL": {
       "qty": 50,
       "avgCost": 103.5
+    },
+    "BIMAS": {
+      "qty": 100,
+      "avgCost": 433.75
     }
   },
   "log": [
     "[14.09.2026 10:48] Portföy sıfırlandı.",
     "[14.09.2026 10:48] AL — 100 adet GARAN @ 134,40 TL (toplam 13.440,00 TL)",
-    "[14.09.2026 10:49] AL — 50 adet TCELL @ 103,50 TL (toplam 5.175,00 TL)"
+    "[14.09.2026 10:49] AL — 50 adet TCELL @ 103,50 TL (toplam 5.175,00 TL)",
+    "[14.09.2026 10:49] AL — 100 adet BIMAS @ 433,75 TL (toplam 43.375,00 TL)"
   ]
 }
