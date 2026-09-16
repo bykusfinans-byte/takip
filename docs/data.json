@@ -1,10 +1,22 @@
 {
-  "generated_at": "2026-09-16T07:03:08.896234+00:00",
+  "generated_at": "2026-09-16T07:26:01.367352+00:00",
   "timeframe": "4h",
   "stocks": [
     {
       "symbol": "THYAO",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 285.25,
+        "ema9": 292.98,
+        "ema21": 296.08,
+        "sma50": 299.72,
+        "macd": -2.5436,
+        "adx": 17.28,
+        "rsi": 26.58,
+        "highlight": false,
+        "signal": "GÜÇLÜ SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 287.25,
         "ema9": 294.91,
@@ -15,23 +27,23 @@
         "rsi": 28.74,
         "highlight": false,
         "signal": "GÜÇLÜ SAT"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 291.5,
-        "ema9": 296.83,
-        "ema21": 298.15,
-        "sma50": 300.35,
-        "macd": -1.1131,
-        "adx": 13.51,
-        "rsi": 34.21,
-        "highlight": false,
-        "signal": "GÜÇLÜ SAT"
       }
     },
     {
       "symbol": "ASELS",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 378.25,
+        "ema9": 381.14,
+        "ema21": 386.37,
+        "sma50": 392.55,
+        "macd": -4.3459,
+        "adx": 20.5,
+        "rsi": 39.55,
+        "highlight": false,
+        "signal": "GÜÇLÜ SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 376.75,
         "ema9": 381.87,
@@ -42,23 +54,23 @@
         "rsi": 37.59,
         "highlight": false,
         "signal": "GÜÇLÜ SAT"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 377.25,
-        "ema9": 383.15,
-        "ema21": 388.23,
-        "sma50": 393.51,
-        "macd": -3.8142,
-        "adx": 19.35,
-        "rsi": 37.97,
-        "highlight": false,
-        "signal": "GÜÇLÜ SAT"
       }
     },
     {
       "symbol": "GARAN",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 127.0,
+        "ema9": 131.29,
+        "ema21": 132.51,
+        "sma50": 132.99,
+        "macd": -0.7829,
+        "adx": 12.63,
+        "rsi": 29.97,
+        "highlight": false,
+        "signal": "GÜÇLÜ SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 128.2,
         "ema9": 132.36,
@@ -69,23 +81,23 @@
         "rsi": 32.55,
         "highlight": false,
         "signal": "GÜÇLÜ SAT"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 130.7,
-        "ema9": 133.4,
-        "ema21": 133.55,
-        "sma50": 133.21,
-        "macd": 0.079,
-        "adx": 8.15,
-        "rsi": 39.05,
-        "highlight": false,
-        "signal": "SAT"
       }
     },
     {
       "symbol": "AKBNK",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 68.55,
+        "ema9": 71.18,
+        "ema21": 71.99,
+        "sma50": 72.49,
+        "macd": -0.5462,
+        "adx": 17.91,
+        "rsi": 32.32,
+        "highlight": false,
+        "signal": "GÜÇLÜ SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 69.65,
         "ema9": 71.83,
@@ -96,23 +108,23 @@
         "rsi": 36.01,
         "highlight": false,
         "signal": "GÜÇLÜ SAT"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 70.75,
-        "ema9": 72.38,
-        "ema21": 72.6,
-        "sma50": 72.63,
-        "macd": -0.0645,
-        "adx": 14.48,
-        "rsi": 40.28,
-        "highlight": false,
-        "signal": "GÜÇLÜ SAT"
       }
     },
     {
       "symbol": "EREGL",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 37.98,
+        "ema9": 38.68,
+        "ema21": 38.69,
+        "sma50": 38.49,
+        "macd": 0.0644,
+        "adx": 13.97,
+        "rsi": 42.06,
+        "highlight": false,
+        "signal": "SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 38.5,
         "ema9": 38.86,
@@ -123,23 +135,23 @@
         "rsi": 47.47,
         "highlight": false,
         "signal": "NÖTR"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 38.54,
-        "ema9": 38.95,
-        "ema21": 38.79,
-        "sma50": 38.5,
-        "macd": 0.1934,
-        "adx": 14.91,
-        "rsi": 47.91,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     },
     {
       "symbol": "KCHOL",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 216.0,
+        "ema9": 221.37,
+        "ema21": 221.55,
+        "sma50": 218.66,
+        "macd": 0.6331,
+        "adx": 20.26,
+        "rsi": 39.83,
+        "highlight": false,
+        "signal": "SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 218.5,
         "ema9": 222.72,
@@ -150,23 +162,23 @@
         "rsi": 43.95,
         "highlight": false,
         "signal": "NÖTR"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 219.3,
-        "ema9": 223.77,
-        "ema21": 222.47,
-        "sma50": 218.87,
-        "macd": 1.8115,
-        "adx": 21.9,
-        "rsi": 45.34,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     },
     {
       "symbol": "SISE",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 41.98,
+        "ema9": 43.24,
+        "ema21": 43.07,
+        "sma50": 41.37,
+        "macd": 0.4761,
+        "adx": 41.31,
+        "rsi": 45.15,
+        "highlight": false,
+        "signal": "NÖTR"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 42.46,
         "ema9": 43.56,
@@ -177,23 +189,23 @@
         "rsi": 47.67,
         "highlight": false,
         "signal": "NÖTR"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 42.94,
-        "ema9": 43.83,
-        "ema21": 43.25,
-        "sma50": 41.29,
-        "macd": 0.8148,
-        "adx": 44.66,
-        "rsi": 50.27,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     },
     {
       "symbol": "BIMAS",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 417.25,
+        "ema9": 423.79,
+        "ema21": 423.28,
+        "sma50": 417.25,
+        "macd": 2.0059,
+        "adx": 24.63,
+        "rsi": 42.91,
+        "highlight": false,
+        "signal": "NÖTR"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 416.75,
         "ema9": 425.42,
@@ -204,23 +216,23 @@
         "rsi": 42.12,
         "highlight": false,
         "signal": "NÖTR"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 419.0,
-        "ema9": 427.59,
-        "ema21": 424.6,
-        "sma50": 417.0,
-        "macd": 4.0063,
-        "adx": 24.98,
-        "rsi": 44.72,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     },
     {
       "symbol": "TUPRS",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 411.5,
+        "ema9": 412.16,
+        "ema21": 409.09,
+        "sma50": 399.31,
+        "macd": 4.2853,
+        "adx": 18.06,
+        "rsi": 54.08,
+        "highlight": false,
+        "signal": "NÖTR"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 412.75,
         "ema9": 412.33,
@@ -231,23 +243,23 @@
         "rsi": 55.26,
         "highlight": false,
         "signal": "GÜÇLÜ AL"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 404.75,
-        "ema9": 412.22,
-        "ema21": 408.46,
-        "sma50": 398.96,
-        "macd": 4.916,
-        "adx": 20.14,
-        "rsi": 48.6,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     },
     {
       "symbol": "SASA",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 2.72,
+        "ema9": 2.84,
+        "ema21": 2.76,
+        "sma50": 2.52,
+        "macd": 0.1075,
+        "adx": 55.86,
+        "rsi": 50.48,
+        "highlight": false,
+        "signal": "NÖTR"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 2.81,
         "ema9": 2.87,
@@ -258,23 +270,23 @@
         "rsi": 56.6,
         "highlight": false,
         "signal": "NÖTR"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 2.98,
-        "ema9": 2.89,
-        "ema21": 2.76,
-        "sma50": 2.5,
-        "macd": 0.1409,
-        "adx": 59.65,
-        "rsi": 71.89,
-        "highlight": true,
-        "signal": "GÜÇLÜ AL"
       }
     },
     {
       "symbol": "FROTO",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 78.5,
+        "ema9": 80.53,
+        "ema21": 80.72,
+        "sma50": 79.46,
+        "macd": 0.1673,
+        "adx": 28.52,
+        "rsi": 38.17,
+        "highlight": false,
+        "signal": "SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 78.7,
         "ema9": 81.03,
@@ -285,23 +297,23 @@
         "rsi": 39.0,
         "highlight": false,
         "signal": "NÖTR"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 79.5,
-        "ema9": 81.62,
-        "ema21": 81.17,
-        "sma50": 79.54,
-        "macd": 0.6928,
-        "adx": 30.74,
-        "rsi": 42.45,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     },
     {
       "symbol": "TCELL",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 98.75,
+        "ema9": 100.88,
+        "ema21": 100.87,
+        "sma50": 100.4,
+        "macd": 0.195,
+        "adx": 19.92,
+        "rsi": 40.57,
+        "highlight": false,
+        "signal": "NÖTR"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 99.35,
         "ema9": 101.41,
@@ -312,23 +324,23 @@
         "rsi": 42.77,
         "highlight": false,
         "signal": "NÖTR"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 100.3,
-        "ema9": 101.92,
-        "ema21": 101.26,
-        "sma50": 100.62,
-        "macd": 0.6834,
-        "adx": 22.42,
-        "rsi": 46.48,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     },
     {
       "symbol": "PGSUS",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 149.2,
+        "ema9": 152.51,
+        "ema21": 152.53,
+        "sma50": 151.26,
+        "macd": 0.3428,
+        "adx": 23.9,
+        "rsi": 40.78,
+        "highlight": false,
+        "signal": "SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 150.1,
         "ema9": 153.34,
@@ -339,23 +351,23 @@
         "rsi": 42.9,
         "highlight": false,
         "signal": "NÖTR"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 152.2,
-        "ema9": 154.15,
-        "ema21": 153.14,
-        "sma50": 151.29,
-        "macd": 1.1133,
-        "adx": 27.2,
-        "rsi": 48.34,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     },
     {
       "symbol": "ISCTR",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 13.19,
+        "ema9": 13.59,
+        "ema21": 13.58,
+        "sma50": 13.18,
+        "macd": 0.0946,
+        "adx": 29.63,
+        "rsi": 40.63,
+        "highlight": false,
+        "signal": "NÖTR"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 13.38,
         "ema9": 13.69,
@@ -366,23 +378,23 @@
         "rsi": 45.25,
         "highlight": false,
         "signal": "NÖTR"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 13.48,
-        "ema9": 13.77,
-        "ema21": 13.64,
-        "sma50": 13.16,
-        "macd": 0.1899,
-        "adx": 33.47,
-        "rsi": 47.91,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     },
     {
       "symbol": "YKBNK",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 33.96,
+        "ema9": 35.63,
+        "ema21": 36.08,
+        "sma50": 36.5,
+        "macd": -0.3207,
+        "adx": 19.16,
+        "rsi": 26.56,
+        "highlight": false,
+        "signal": "GÜÇLÜ SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 34.78,
         "ema9": 36.05,
@@ -393,23 +405,23 @@
         "rsi": 31.74,
         "highlight": false,
         "signal": "GÜÇLÜ SAT"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 35.62,
-        "ema9": 36.36,
-        "ema21": 36.44,
-        "sma50": 36.58,
-        "macd": -0.0297,
-        "adx": 15.13,
-        "rsi": 38.98,
-        "highlight": false,
-        "signal": "GÜÇLÜ SAT"
       }
     },
     {
       "symbol": "XU100",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 13794.73,
+        "ema9": 14108.87,
+        "ema21": 14210.51,
+        "sma50": 14309.82,
+        "macd": -71.2811,
+        "adx": 20.55,
+        "rsi": 29.26,
+        "highlight": false,
+        "signal": "GÜÇLÜ SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 13913.01,
         "ema9": 14187.41,
@@ -420,23 +432,23 @@
         "rsi": 32.71,
         "highlight": false,
         "signal": "GÜÇLÜ SAT"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 14003.49,
-        "ema9": 14256.01,
-        "ema21": 14285.99,
-        "sma50": 14337.99,
-        "macd": -12.6102,
-        "adx": 18.36,
-        "rsi": 35.7,
-        "highlight": false,
-        "signal": "GÜÇLÜ SAT"
       }
     },
     {
       "symbol": "TURSG",
       "current": {
+        "time": "2026-09-16T06:00:00+03:00",
+        "price": 6.05,
+        "ema9": 6.14,
+        "ema21": 6.15,
+        "sma50": 6.15,
+        "macd": -0.0069,
+        "adx": 12.12,
+        "rsi": 41.89,
+        "highlight": false,
+        "signal": "SAT"
+      },
+      "previous": {
         "time": "2026-09-15T14:00:00+03:00",
         "price": 6.08,
         "ema9": 6.16,
@@ -447,18 +459,6 @@
         "rsi": 43.81,
         "highlight": false,
         "signal": "SAT"
-      },
-      "previous": {
-        "time": "2026-09-15T10:00:00+03:00",
-        "price": 6.16,
-        "ema9": 6.18,
-        "ema21": 6.17,
-        "sma50": 6.16,
-        "macd": 0.011,
-        "adx": 11.72,
-        "rsi": 49.41,
-        "highlight": false,
-        "signal": "NÖTR"
       }
     }
   ],
