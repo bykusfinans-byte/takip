@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T06:58:38.052935+00:00",
+  "generated_at": "2026-09-16T07:03:08.896234+00:00",
   "timeframe": "4h",
   "stocks": [
     {
@@ -11,7 +11,7 @@
         "ema21": 297.16,
         "sma50": 300.05,
         "macd": -1.8375,
-        "adx": 15.22,
+        "adx": 15.23,
         "rsi": 28.74,
         "highlight": false,
         "signal": "GÜÇLÜ SAT"
@@ -408,6 +408,33 @@
       }
     },
     {
+      "symbol": "XU100",
+      "current": {
+        "time": "2026-09-15T14:00:00+03:00",
+        "price": 13913.01,
+        "ema9": 14187.41,
+        "ema21": 14252.08,
+        "sma50": 14324.72,
+        "macd": -40.4754,
+        "adx": 19.22,
+        "rsi": 32.71,
+        "highlight": false,
+        "signal": "GÜÇLÜ SAT"
+      },
+      "previous": {
+        "time": "2026-09-15T10:00:00+03:00",
+        "price": 14003.49,
+        "ema9": 14256.01,
+        "ema21": 14285.99,
+        "sma50": 14337.99,
+        "macd": -12.6102,
+        "adx": 18.36,
+        "rsi": 35.7,
+        "highlight": false,
+        "signal": "GÜÇLÜ SAT"
+      }
+    },
+    {
       "symbol": "TURSG",
       "current": {
         "time": "2026-09-15T14:00:00+03:00",
@@ -435,7 +462,5 @@
       }
     }
   ],
-  "errors": [
-    "X100.IS: indirilemedi (boş veri döndü)"
-  ]
+  "errors": []
 }
