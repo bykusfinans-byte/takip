@@ -26,8 +26,7 @@ import yfinance as yf
 SYMBOLS = [
     "THYAO.IS", "ASELS.IS", "GARAN.IS", "AKBNK.IS", "EREGL.IS",
     "KCHOL.IS", "SISE.IS", "BIMAS.IS", "TUPRS.IS", "SASA.IS",
-    "FROTO.IS", "TCELL.IS", "PGSUS.IS", "ISCTR.IS", "YKBNK.IS", "XU100.IS", "TURSG.IS"
-]
+    "FROTO.IS", "TCELL.IS", "PGSUS.IS", "ISCTR.IS", "YKBNK.IS", "TURSG.IS", "CIMSA.IS", "XU100.IS"]
 
 TIMEFRAME_HOURS = 4
 SESSION_START = "10:00"   # BIST açılış (Europe/Istanbul)
